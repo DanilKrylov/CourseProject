@@ -1,51 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using BSTeamSearch.DataBase;
+﻿using BSTeamSearch.DataBase;
 using BSTeamSearch.Models;
-using BSTeamSearch.Services;
+using BSTeamSearch.Repositories.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace BSTeamSearch.Controllers
 {
     public class RegistrationController : Controller
     {
-        private readonly DBContent _dbContent;
-        public RegistrationController(DBContent db)
+        private readonly IUserRepository _userRepository;
+        public RegistrationController(IUserRepository userRepository)
         {
-            _dbContent = db;
+            _userRepository = userRepository;
         }
         public IActionResult Registration()
         {
-
-            if (ControllerContext.HttpContext.Session.GetString("name") != null)
-            {
-                _dbContent.Dispose();
-                return View("../Applications/All");
-            }
-            
             return View();
         }
         [HttpPost]
         public IActionResult Registration([Bind(include: "Name,Password")] User user)
         {
-#warning TO DO:
-            if (!(user.Name is null) && AutorisationService.UserIsRegistered(_dbContent, user))
+            if (!(user.Name is null) && AutorisationService.UserIsRegistered(_userRepository, user.Name))
             {
                 ModelState.AddModelError("Name", "Данный логин уже занят, попробуйте какойто другой");
             }
 
             if (ModelState.IsValid)
             {
-                _dbContent.User.Add(user);
-                _dbContent.SaveChanges();
+                _userRepository.Add(user);
                 ControllerContext.HttpContext.Session.SetString("name", user.Name);
                 
-                return View("../Applications/All");
-                
+                return RedirectPermanent("../Applications/All");
             }
 
             return View(user);

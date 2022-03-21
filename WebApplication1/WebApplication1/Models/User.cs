@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 using BSTeamSearch.Annotations;
 
 namespace BSTeamSearch.Models
 {
     public class User
     {
-
         [Key]
         [BanSpacedInString(ErrorMessage = "Недопустимы пробелы в логине")]
         [Required(ErrorMessage = "Поле логгин не может быть пустым")]
@@ -22,16 +18,7 @@ namespace BSTeamSearch.Models
         [StringLength(12, MinimumLength = 6, ErrorMessage = "Длина пароля должна быть от 6 до 12 символов")]
         public string Password { get; set; }
 
+
         public List<Application> Applications { get; set; } = new();
-
-        public bool CheckPassword(string password)
-        {
-            if (Password == password)
-            {
-                return true;
-            }
-
-            return false;
-        }
     }
 }

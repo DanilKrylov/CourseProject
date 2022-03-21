@@ -14,22 +14,29 @@
     <div>
         <p>Выберите бравлера</p>
         <div>
-            @{
-                @Html.DropDownListFor(x => x.BrawlerName, ViewBag.BrawlerListItems as SelectList)
-            }
+            <select asp-for="BrawlerName">
+                @{ 
+                    foreach(Brawler elem in ViewBag.Brawlers)
+                    {
+                        <option >@elem.Name</option>
+                    }
+                }
+            </select>
         </div>
         <p>Выберите количество кубков</p>
         <div>
-            @{
-                var cups = new int[20];
+            
+            <select asp-for="CountOfCups">
+                @{
+                    for (int i = 0; i < 20; i++)
+                    {
+                        int cups = i * 50;
 
-                for (int i = 0; i < 20; i++)
-                {
-                    cups[i] = i * 50;
+                        <option>@cups</option>
+                    }
                 }
-                @Html.DropDownListFor(x => x.CountOfCups, new SelectList(cups));
-            }
+            </select>
         </div>
     </div>
-    <input type="submit" value="enter" />
+    <input type="submit" value="Отправить" />
 }

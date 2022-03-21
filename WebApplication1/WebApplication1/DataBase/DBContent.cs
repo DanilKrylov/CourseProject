@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using BSTeamSearch.Models;
+﻿using BSTeamSearch.Models;
 using Microsoft.EntityFrameworkCore;
 namespace BSTeamSearch.DataBase
 {
@@ -10,10 +6,11 @@ namespace BSTeamSearch.DataBase
     {
         public DBContent(DbContextOptions<DBContent> options) : base(options)
         {
-            //Database.EnsureDeleted();
-            //Database.EnsureCreated();
+
         }
+
         public DbSet<User> User { get; set; }
+
         public DbSet<Application> Application { get; set; }
 
         public DbSet<Brawler> Brawler { get; set; }

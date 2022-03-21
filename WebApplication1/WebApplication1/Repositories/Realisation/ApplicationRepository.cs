@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using BSTeamSearch.DataBase;
 using BSTeamSearch.Exceptions;
 using BSTeamSearch.Models;
@@ -14,11 +12,15 @@ namespace BSTeamSearch.Repositories.Realisation
     {
 
         private readonly DBContent _db;
-        public ApplicationRepository(DBContent DataBase)
+        private readonly IUserRepository _userRepository;
+        private readonly IBrawlerRepository _brawlerRepository;
+        public ApplicationRepository(DBContent dataBase, IUserRepository userRepository, IBrawlerRepository brawlerRepository)
         {
-            _db = DataBase;
+            _db = dataBase;
+            _userRepository = userRepository;
+            _brawlerRepository = brawlerRepository;
         }
-        public Application GetApplication(int applicationId)
+        public Application Get(int applicationId)
         {
             var application = _db.Application.Include(c => c.Brawler)
                                   .Include(c => c.User)
@@ -26,16 +28,19 @@ namespace BSTeamSearch.Repositories.Realisation
 
             if(application is null)
             {
+                _db.Dispose();
                 throw new ObjectNotFoundInDataBaseException();
             }
-
+            _db.Dispose();
             return application;
         }
-        public IEnumerable<Application> GetAllApplications()
+        public IEnumerable<Application> GetAll()
         {
-            return _db.Application.Include(c => c.Brawler)
-                                  .Include(c => c.User)
-                                  .ToList();
+            var applications = _db.Application.Include(c => c.Brawler)
+                                              .Include(c => c.User)
+                                              .ToList();
+            _db.Dispose();
+            return applications;
         }
 
         public IEnumerable<Application> GetUserApplications(string userName)
@@ -44,14 +49,15 @@ namespace BSTeamSearch.Repositories.Realisation
 
             if (user is null)
             {
+                _db.Dispose();
                 throw new ObjectNotFoundInDataBaseException();
             }
             var userApplications = user.Applications;
             foreach (var application in userApplications)
             {
                 application.Brawler = _db.Brawler.FirstOrDefault(c => c.Name == application.BrawlerName);
-
             }
+            _db.Dispose();
             return user.Applications;
         }
 
@@ -70,6 +76,23 @@ namespace BSTeamSearch.Repositories.Realisation
             _db.Application.Remove(application);
             user.Applications.Remove(application);
             _db.SaveChanges();
+            _db.Dispose();
+        }
+
+        public void Add(Application application, string userName)
+        {
+            application.UserName = userName;
+            if(application.Brawler is null)
+            {
+                application.Brawler = _brawlerRepository.Get(application.BrawlerName);
+            }
+            if(application.User is null)
+            {
+                application.User = _userRepository.Get(application.UserName);
+            }
+            _db.Application.Add(application);
+            _db.SaveChanges();
+            _db.Dispose();
         }
     }
 }

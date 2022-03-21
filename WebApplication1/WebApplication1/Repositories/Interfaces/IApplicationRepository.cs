@@ -1,19 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using BSTeamSearch.Models;
 
 namespace BSTeamSearch.Repositories.Interfaces
 {
     public interface IApplicationRepository
     {
-        public IEnumerable<Application> GetAllApplications();
+        public IEnumerable<Application> GetAll();
 
         public IEnumerable<Application> GetUserApplications(string UserName);
 
         public void Delete(Application application, string userName);
 
-        public Application GetApplication(int applicationId);
+        public Application Get(int applicationId);
+
+        public void Add(Application application, string userName);
     }
 }

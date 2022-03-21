@@ -1,27 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using BSTeamSearch.DataBase;
+﻿using BSTeamSearch.DataBase;
 using BSTeamSearch.Models;
-using BSTeamSearch.Services;
+using BSTeamSearch.Repositories.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace BSTeamSearch.Controllers
 {
     public class AutorisationController : Controller
     {
-        #warning добавить страницу при переходе на регистрацию , если в куки есть name
-        private readonly DBContent _dbContent;
-        public AutorisationController(DBContent db)
+        private readonly IUserRepository _userRepository;
+        public AutorisationController(IUserRepository userRepository)
         {
-            _dbContent = db;
+            _userRepository = userRepository;
         }
-
-        
 
         public IActionResult AutorisationToTheSite()
         {
@@ -31,14 +22,14 @@ namespace BSTeamSearch.Controllers
         [HttpPost]
         public IActionResult AutorisationToTheSite([Bind(include: "Name,Password")] User user)
         {
-            if(!(user.Name is null || user.Password is null) && !AutorisationService.PasswordIsCorrect(_dbContent, user))
+            if(!(user.Name is null || user.Password is null) && 
+               (!AutorisationService.UserIsRegistered(_userRepository, user.Name) ||
+               !AutorisationService.PasswordIsCorrect(_userRepository, user)))
             {
                 ModelState.AddModelError("Password", "Логгин или пароль указаны неправильно");
             }
-
             if (ModelState.IsValid)
             {
-                _dbContent.Dispose();
                 ControllerContext.HttpContext.Session.SetString("name", user.Name);
                 return RedirectPermanent("../Applications/All");
             }

@@ -1,28 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace BSTeamSearch.Models
 {
     public class Application
     {
+        [Key]
         public int Id { get; set; }
-
-
-        public string BrawlerName { get; set; }
-        public Brawler Brawler { get; set; }
 
         public int CountOfCups { get; set; }
 
+        public string UserName { get; set; }
         public User User { get; set; }
 
-        
-        /*public Application(Brawler brawler, int countOfCups)
-        {
-            UserBrawler = brawler;
 
-            CountOfCups = countOfCups;
-        }*/
+        public Brawler Brawler { get; set; }
+        public string BrawlerName { get; set; }
+
     }
 }
