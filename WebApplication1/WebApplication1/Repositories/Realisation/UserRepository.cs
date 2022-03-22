@@ -21,7 +21,6 @@ namespace BSTeamSearch.Repositories.Realisation
         public IEnumerable GetAll()
         {
             var users = _db.User.ToList();
-            _db.Dispose();
             return users;
         }
 
@@ -31,11 +30,9 @@ namespace BSTeamSearch.Repositories.Realisation
 
             if(user is null)
             {
-                _db.Dispose();
                 throw new ObjectNotFoundInDataBaseException();
             }
 
-            _db.Dispose();
             return user;
         }
 
@@ -43,7 +40,6 @@ namespace BSTeamSearch.Repositories.Realisation
         {
             _db.User.Add(user);
             _db.SaveChanges();
-            _db.Dispose();
         }
     }
 }

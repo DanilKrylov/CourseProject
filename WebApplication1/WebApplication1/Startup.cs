@@ -54,14 +54,6 @@ namespace BSTeamSearch
                     pattern: "{controller=Registration}/{action=Registration}");
 
             });
-
-            using (var scope = app.ApplicationServices.CreateScope())
-            {
-                DBContent content = scope.ServiceProvider.GetRequiredService<DBContent>();
-                DataBaseInitialService.InitialBrawlers(content);
-                content.SaveChanges();
-                
-            }
         } 
     }
 }

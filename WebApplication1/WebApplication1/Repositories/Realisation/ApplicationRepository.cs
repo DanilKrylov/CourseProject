@@ -31,7 +31,6 @@ namespace BSTeamSearch.Repositories.Realisation
                 _db.Dispose();
                 throw new ObjectNotFoundInDataBaseException();
             }
-            _db.Dispose();
             return application;
         }
         public IEnumerable<Application> GetAll()
@@ -39,26 +38,21 @@ namespace BSTeamSearch.Repositories.Realisation
             var applications = _db.Application.Include(c => c.Brawler)
                                               .Include(c => c.User)
                                               .ToList();
-            _db.Dispose();
             return applications;
         }
 
         public IEnumerable<Application> GetUserApplications(string userName)
         {
-            User user = _db.User.Include(c => c.Applications).FirstOrDefault(c => c.Name == userName);
-
-            if (user is null)
+            var applications = _db.Application.Where(c => c.User.Name == userName)
+                                              .Include(c => c.Brawler)
+                                              .Include(c => c.User)
+                                              .ToList();
+            if (applications is null || applications.Count == 0)
             {
-                _db.Dispose();
                 throw new ObjectNotFoundInDataBaseException();
             }
-            var userApplications = user.Applications;
-            foreach (var application in userApplications)
-            {
-                application.Brawler = _db.Brawler.FirstOrDefault(c => c.Name == application.BrawlerName);
-            }
-            _db.Dispose();
-            return user.Applications;
+
+            return applications;
         }
 
         public void Delete(Application application, string userName)
@@ -76,7 +70,6 @@ namespace BSTeamSearch.Repositories.Realisation
             _db.Application.Remove(application);
             user.Applications.Remove(application);
             _db.SaveChanges();
-            _db.Dispose();
         }
 
         public void Add(Application application, string userName)
@@ -92,7 +85,6 @@ namespace BSTeamSearch.Repositories.Realisation
             }
             _db.Application.Add(application);
             _db.SaveChanges();
-            _db.Dispose();
         }
     }
 }

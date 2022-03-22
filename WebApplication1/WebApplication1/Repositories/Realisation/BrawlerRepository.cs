@@ -17,7 +17,6 @@ namespace BSTeamSearch.Repositories.Realisation
         public IEnumerable GetAll()
         {
             var brawlers =  _db.Brawler.ToList();
-            _db.Dispose();
             return brawlers;
         }
 
@@ -27,10 +26,8 @@ namespace BSTeamSearch.Repositories.Realisation
 
             if(brawler is null)
             {
-                _db.Dispose();
                 throw new ObjectNotFoundInDataBaseException();
             }
-            _db.Dispose();
             return brawler;
         }
 
@@ -38,7 +35,6 @@ namespace BSTeamSearch.Repositories.Realisation
         {
             _db.Brawler.Add(brawler);
             _db.SaveChanges();
-            _db.Dispose();
         }
     }
 }
