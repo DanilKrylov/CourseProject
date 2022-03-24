@@ -23,7 +23,7 @@ namespace BSTeamSearch.Controllers
             _applicationRepository = applicationRepository;
             _brawlerRepository = brawlerRepository;
         }
-
+        //Люблю преподавателя
 
 
         public IActionResult All()
