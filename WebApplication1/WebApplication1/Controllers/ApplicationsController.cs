@@ -88,13 +88,13 @@ namespace BSTeamSearch.Controllers
             return View(userApplications);
         }
 
-        public IActionResult Delete(int applicationId)
+        public IActionResult DeleteApplication(int applicationId)
         {
             int Id = Convert.ToInt32(applicationId);
             #warning Сделать подтверждение пользователем
             if (!ControllerContext.HttpContext.Session.Keys.Contains("name"))
             {
-                return View("../NotRegistered");
+                return Redirect("../NotRegistered");
             }
 
             try
@@ -104,7 +104,7 @@ namespace BSTeamSearch.Controllers
             catch
             {
             }
-            return RedirectPermanent("../Applications/All");
+            return RedirectPermanent("~/Applications/All");
         }
     }
 }
