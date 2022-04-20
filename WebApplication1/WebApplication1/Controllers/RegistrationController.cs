@@ -1,6 +1,7 @@
 ﻿using BSTeamSearch.DataBase;
 using BSTeamSearch.Models;
 using BSTeamSearch.Repositories.Interfaces;
+using BSTeamSearch.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,7 +19,7 @@ namespace BSTeamSearch.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Registration([Bind(include: "Name,Password")] User user)
+        public IActionResult Registration(RegistrationViewModel user)
         {
             if (!(user.Name is null) && AutorisationService.UserIsRegistered(_userRepository, user.Name))
             {

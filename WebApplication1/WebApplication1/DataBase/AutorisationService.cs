@@ -20,16 +20,16 @@ namespace BSTeamSearch.DataBase
             return true;
         }
 
-        public static bool PasswordIsCorrect(IUserRepository userRepository, User user)
+        public static bool PasswordIsCorrect(IUserRepository userRepository, string userName, string password)
         {
-            User checkUs = userRepository.Get(user.Name);
+            User checkUs = userRepository.Get(userName);
 
             if(checkUs is null)
             {
                 throw new ObjectNotFoundInDataBaseException();
             }
 
-            if(user.Password == checkUs.Password)
+            if(password == checkUs.Password)
             {
                 return true;
             }

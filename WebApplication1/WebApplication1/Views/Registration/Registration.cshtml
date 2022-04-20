@@ -4,7 +4,7 @@
 @{
     Layout = null;
 }
-@model User
+@model RegistrationViewModel
 
 
 <!DOCTYPE html>
@@ -22,15 +22,31 @@
         </div>
         <div>
             <p>Ваш пароль:</p>
-            <input asp-for="Password"/>
+            <input asp-for="Password" />
             <span asp-validation-for="Password" class="field-validation-valid" data-valmsg-for="Password" data-valmsg-replace="true"></span>
+        </div>
+        <div>
+            <p>Подтвердите ваш пароль:</p>
+            <input asp-for="ConfirmPassword" />
+            <span asp-validation-for="ConfirmPassword" class="field-validation-valid" data-valmsg-for="ConfirmPassword" data-valmsg-replace="true"></span>
+        </div>
+        <div>
+            <p>Введвите ваш дискорд</p>
+            <input asp-for="DiscordName" />
+            <span asp-validation-for="DiscordName" class="field-validation-valid" data-valmsg-for="ConfirmPassword" data-valmsg-replace="true"></span>
+            <span>#</span>
+            <input asp-for="DiscordSharp" />
+            <span asp-validation-for="DiscordSharp" class="field-validation-valid" data-valmsg-for="ConfirmPassword" data-valmsg-replace="true"></span>
+        </div>
+        <div>
+            
         </div>
         <div>
             <input type="submit" value="enter" />
         </div>
         <div>
             <p>Уже есть аккаунт?<p>
-            <a href="~/Autorisation/AutorisationToTheSite">Войти</a>
+                <a href="~/Autorisation/AutorisationToTheSite">Войти</a>
         </div>
     </form>
 </body>

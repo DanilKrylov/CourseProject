@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using BSTeamSearch.Models;
+using BSTeamSearch.ViewModels;
 
 namespace BSTeamSearch.Repositories.Interfaces
 {
@@ -9,6 +10,6 @@ namespace BSTeamSearch.Repositories.Interfaces
 
         public User Get(string userName);
 
-        public void Add(User user);
+        public void Add(RegistrationViewModel user);
     }
 }

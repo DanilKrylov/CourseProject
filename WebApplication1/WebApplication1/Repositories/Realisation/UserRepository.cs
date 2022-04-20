@@ -7,6 +7,8 @@ using BSTeamSearch.DataBase;
 using BSTeamSearch.Exceptions;
 using BSTeamSearch.Models;
 using BSTeamSearch.Repositories.Interfaces;
+using BSTeamSearch.ViewModels;
+using Microsoft.EntityFrameworkCore;
 
 namespace BSTeamSearch.Repositories.Realisation
 {
@@ -20,13 +22,13 @@ namespace BSTeamSearch.Repositories.Realisation
 
         public IEnumerable GetAll()
         {
-            var users = _db.User.ToList();
+            var users = _db.User.Include(c => c.Discord).ToList();
             return users;
         }
 
         public User Get(string userName)
         {
-            var user = _db.User.FirstOrDefault(c => c.Name == userName);
+            var user = _db.User.Include(c => c.Discord).FirstOrDefault(c => c.Name == userName);
 
             if(user is null)
             {
@@ -36,9 +38,10 @@ namespace BSTeamSearch.Repositories.Realisation
             return user;
         }
 
-        public void Add(User user)
+        public void Add(RegistrationViewModel user)
         {
-            _db.User.Add(user);
+            _db.User.Add(new User(user.Name, user.Password));
+            _db.Discords.Add(new Discord(user.DiscordName, user.DiscordSharp, user.Name));
             _db.SaveChanges();
         }
     }

@@ -23,8 +23,6 @@ namespace BSTeamSearch.Controllers
             _applicationRepository = applicationRepository;
             _brawlerRepository = brawlerRepository;
         }
-        //Люблю преподавателя
-
 
         public IActionResult All()
         {
@@ -74,17 +72,16 @@ namespace BSTeamSearch.Controllers
                 return View("../NotRegistered");
             }
             IEnumerable userApplications;
-
+            ViewBag.UserName = ControllerContext.HttpContext.Session.GetString("name");
             try
             {
                 string userName = ControllerContext.HttpContext.Session.GetString("name");
                 userApplications = _applicationRepository.GetUserApplications(userName);
             }
-            catch(ObjectNotFoundInDataBaseException ex)
+            catch(ObjectNotFoundInDataBaseException)
             {
-                return View("../NotRegistered");
+                return View(null);
             }
-            ViewBag.UserName = ControllerContext.HttpContext.Session.GetString("name");
             return View(userApplications);
         }
 

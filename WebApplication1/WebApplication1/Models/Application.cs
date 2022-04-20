@@ -12,9 +12,7 @@ namespace BSTeamSearch.Models
         public string UserName { get; set; }
         public User User { get; set; }
 
-
-        public Brawler Brawler { get; set; }
         public string BrawlerName { get; set; }
-
+        public Brawler Brawler { get; set; }
     }
 }

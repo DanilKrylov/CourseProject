@@ -1,6 +1,7 @@
 ﻿using BSTeamSearch.DataBase;
 using BSTeamSearch.Models;
 using BSTeamSearch.Repositories.Interfaces;
+using BSTeamSearch.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,11 +21,11 @@ namespace BSTeamSearch.Controllers
         }
 
         [HttpPost]
-        public IActionResult AutorisationToTheSite([Bind(include: "Name,Password")] User user)
+        public IActionResult AutorisationToTheSite(AutorisationViewModel user)
         {
             if(!(user.Name is null || user.Password is null) && 
                (!AutorisationService.UserIsRegistered(_userRepository, user.Name) ||
-               !AutorisationService.PasswordIsCorrect(_userRepository, user)))
+               !AutorisationService.PasswordIsCorrect(_userRepository, user.Name, user.Password)))
             {
                 ModelState.AddModelError("Password", "Логгин или пароль указаны неправильно");
             }
