@@ -23,7 +23,12 @@ namespace BSTeamSearch.Controllers
             _applicationRepository = applicationRepository;
             _brawlerRepository = brawlerRepository;
         }
-
+        [HttpPost]
+        public string Like(int Id)
+        {
+            
+            return ControllerContext.HttpContext.Session.GetString("name") + " " + Id;
+        }
         public IActionResult All()
         {
             if (!ControllerContext.HttpContext.Session.Keys.Contains("name"))

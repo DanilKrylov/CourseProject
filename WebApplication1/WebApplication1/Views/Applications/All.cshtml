@@ -3,8 +3,6 @@
     Layout = "_MainLayout";
 }
 @model List<Application>
-<script src="@Url.Content("~/scripts/jquery.validate.unobtrusive.js")" type="text/javascript"></script>
-<script src="@Url.Content("~/scripts/jquery-1.7.1.js")" type="text/javascript"></script>
 @{
     if (Model is null )
     {
@@ -14,23 +12,23 @@
     }
     else
     {
-        <div>
-        @foreach (var elem in Model)
-        {
-            using()
-            <div class="container">
-                <div class="row">
-                    <div class="col-6">
-                        <img height="150" width="150" src=@elem.Brawler.Img />
-                        <p>@elem.Brawler.Name</p>
-                    </div>
-                    <div class="col-6">
-                        <p>@elem.User.Name</p>
-                        <p>@elem.CountOfCups</p>
-                    </div>
+<div>
+    @foreach (var elem in Model)
+    {
+        <div class="container">
+            <div class="row">
+                <div class="col-6">
+                    <img height="150" width="150" src=@elem.Brawler.Img />
+                    <p>@elem.Brawler.Name</p>
+                </div>
+                <div class="col-6">
+                    <p>@elem.User.Name</p>
+                    <p>@elem.CountOfCups</p>
+                    <input type="button" value="like" onclick="Like(@elem.Id)" />
                 </div>
             </div>
-        }
         </div>
+    }
+</div>
     }
 }

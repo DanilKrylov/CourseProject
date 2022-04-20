@@ -30,7 +30,6 @@ namespace BSTeamSearch
             services.AddTransient<IApplicationRepository, ApplicationRepository>();
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IBrawlerRepository, BrawlerRepository>();
-
             services.AddControllersWithViews();
         }
 
@@ -46,7 +45,6 @@ namespace BSTeamSearch
             app.UseRouting();
             app.UseSession();
             app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
