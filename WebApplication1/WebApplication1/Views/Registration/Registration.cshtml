@@ -35,11 +35,11 @@
             <input asp-for="DiscordName" />
             <span asp-validation-for="DiscordName" class="field-validation-valid" data-valmsg-for="ConfirmPassword" data-valmsg-replace="true"></span>
             <span>#</span>
-            <input asp-for="DiscordSharp" />
+            <input type="number" asp-for="DiscordSharp" required />
             <span asp-validation-for="DiscordSharp" class="field-validation-valid" data-valmsg-for="ConfirmPassword" data-valmsg-replace="true"></span>
         </div>
         <div>
-            
+
         </div>
         <div>
             <input type="submit" value="enter" />
@@ -49,6 +49,9 @@
                 <a href="~/Autorisation/AutorisationToTheSite">Войти</a>
         </div>
     </form>
+    <div>
+        <i class="heart fa fa-heart-o"></i>
+    </div>
 </body>
 </html>
 

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace BSTeamSearch.Models
 {
@@ -14,5 +15,7 @@ namespace BSTeamSearch.Models
 
         public string BrawlerName { get; set; }
         public Brawler Brawler { get; set; }
+
+        public List<Like> Likes { get; set; }
     }
 }

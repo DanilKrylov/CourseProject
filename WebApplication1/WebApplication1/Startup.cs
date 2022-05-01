@@ -30,6 +30,8 @@ namespace BSTeamSearch
             services.AddTransient<IApplicationRepository, ApplicationRepository>();
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IBrawlerRepository, BrawlerRepository>();
+            services.AddTransient<ILikeRepository, LikeRepository>();
+
             services.AddControllersWithViews();
         }
 

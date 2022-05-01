@@ -23,12 +23,6 @@ namespace BSTeamSearch.Controllers
             _applicationRepository = applicationRepository;
             _brawlerRepository = brawlerRepository;
         }
-        [HttpPost]
-        public string Like(int Id)
-        {
-            
-            return ControllerContext.HttpContext.Session.GetString("name") + " " + Id;
-        }
         public IActionResult All()
         {
             if (!ControllerContext.HttpContext.Session.Keys.Contains("name"))
@@ -107,6 +101,21 @@ namespace BSTeamSearch.Controllers
             {
             }
             return RedirectPermanent("~/Applications/All");
+        }
+
+        [HttpPost]
+        public IActionResult Filtration(bool onlyLiked, bool cupsAscending, string searchString)
+        {
+            if (!ControllerContext.HttpContext.Session.Keys.Contains("name"))
+            {
+                return View("../NotRegistered");
+            }
+
+            string userName = ControllerContext.HttpContext.Session.GetString("name");
+            ViewBag.UserName = userName;
+            var applicationList = _applicationRepository.FiltrationGet(userName, onlyLiked, cupsAscending, searchString).ToList();
+
+            return View("../Applications/All", applicationList);
         }
     }
 }

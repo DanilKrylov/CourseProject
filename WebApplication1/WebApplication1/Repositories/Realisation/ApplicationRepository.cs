@@ -12,13 +12,15 @@ namespace BSTeamSearch.Repositories.Realisation
     {
 
         private readonly DBContent _db;
+        private readonly ILikeRepository _likeRepository;
         private readonly IUserRepository _userRepository;
         private readonly IBrawlerRepository _brawlerRepository;
-        public ApplicationRepository(DBContent dataBase, IUserRepository userRepository, IBrawlerRepository brawlerRepository)
+        public ApplicationRepository(DBContent dataBase, IUserRepository userRepository, IBrawlerRepository brawlerRepository, ILikeRepository likeRepository)
         {
             _db = dataBase;
             _userRepository = userRepository;
             _brawlerRepository = brawlerRepository;
+            _likeRepository = likeRepository;
         }
         public Application Get(int applicationId)
         {
@@ -31,6 +33,7 @@ namespace BSTeamSearch.Repositories.Realisation
                 _db.Dispose();
                 throw new ObjectNotFoundInDataBaseException();
             }
+            application.Likes = _likeRepository.GetLikesForApplication(application.Id).ToList();
             return application;
         }
         public IEnumerable<Application> GetAll()
@@ -38,6 +41,11 @@ namespace BSTeamSearch.Repositories.Realisation
             var applications = _db.Application.Include(c => c.Brawler)
                                               .Include(c => c.User)
                                               .ToList();
+            
+            foreach(var application in applications)
+            {
+                application.Likes = _likeRepository.GetLikesForApplication(application.Id).ToList();
+            }
             return applications;
         }
 
@@ -51,7 +59,10 @@ namespace BSTeamSearch.Repositories.Realisation
             {
                 throw new ObjectNotFoundInDataBaseException();
             }
-
+            foreach (var application in applications)
+            {
+                application.Likes = _likeRepository.GetLikesForApplication(application.Id).ToList();
+            }
             return applications;
         }
 
@@ -85,6 +96,36 @@ namespace BSTeamSearch.Repositories.Realisation
             }
             _db.Application.Add(application);
             _db.SaveChanges();
+        }
+
+        public IEnumerable<Application> FiltrationGet(string userName, bool onlyLiked, bool cupsAscending, string searchString)
+        {
+            List<Application> applications = new List<Application>(); 
+            if (onlyLiked)
+            {
+                foreach(Like like in _likeRepository.GetLikesFromUser(userName))
+                {
+                    applications.Add(Get(like.ApplicationId));
+                }
+            }
+            else
+            {
+                applications = GetAll().ToList();
+            }
+            if(searchString is not null)
+            {
+                searchString = searchString.ToLower();
+                applications = applications.Where(c => c.BrawlerName.ToLower().Contains(searchString) ||
+                                           c.UserName.ToLower().Contains(searchString)).ToList();
+            }
+
+            applications = applications.OrderBy(c => c.CountOfCups).ToList();
+            if (!cupsAscending)
+            {
+                applications.Reverse();
+            }
+
+            return applications;
         }
     }
 }

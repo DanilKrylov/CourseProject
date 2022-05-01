@@ -7,6 +7,8 @@ namespace BSTeamSearch.Repositories.Interfaces
     {
         public IEnumerable<Application> GetAll();
 
+        public IEnumerable<Application> FiltrationGet(string userName, bool onlyLiked, bool cupsAscending, string searchString);
+
         public IEnumerable<Application> GetUserApplications(string UserName);
 
         public void Delete(Application application, string userName);
