@@ -1,0 +1,10 @@
+
+    [
+        {
+            "Name": "Admin",
+            "Password": "rectangle_D",
+            "Discord": null,
+            "IsAdmin": true,
+            "Applications": []
+        }
+    ]

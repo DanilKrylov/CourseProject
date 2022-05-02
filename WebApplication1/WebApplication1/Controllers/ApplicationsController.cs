@@ -31,7 +31,6 @@ namespace BSTeamSearch.Controllers
             }
             ViewBag.UserName = ControllerContext.HttpContext.Session.GetString("name");
             var applicationList = _applicationRepository.GetAll();
-
             return View(applicationList);
         }
 
@@ -104,7 +103,7 @@ namespace BSTeamSearch.Controllers
         }
 
         [HttpPost]
-        public IActionResult Filtration(bool onlyLiked, bool cupsAscending, string searchString)
+        public IActionResult Filtration(bool onlyLiked, bool cupsAscending, string searchString, int minCups, int maxCups)
         {
             if (!ControllerContext.HttpContext.Session.Keys.Contains("name"))
             {
@@ -113,9 +112,9 @@ namespace BSTeamSearch.Controllers
 
             string userName = ControllerContext.HttpContext.Session.GetString("name");
             ViewBag.UserName = userName;
-            var applicationList = _applicationRepository.FiltrationGet(userName, onlyLiked, cupsAscending, searchString).ToList();
+            var applicationList = _applicationRepository.FiltrationGet(userName, onlyLiked, cupsAscending, searchString, minCups, maxCups).ToList();
 
-            return View("../Applications/All", applicationList);
+            return View( applicationList);
         }
     }
 }

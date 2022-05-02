@@ -1,5 +1,9 @@
-﻿using BSTeamSearch.Models;
+﻿using System.IO;
+using System.Text.Json;
+using BSTeamSearch.Models;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
+
 namespace BSTeamSearch.DataBase
 {
     public class DBContent : DbContext
@@ -28,6 +32,11 @@ namespace BSTeamSearch.DataBase
                     new Brawler("Кольт", "../img/кольт.png"),
                     new Brawler("Булл", "../img/булл.png"),
                 });
+
+            User[] admins = JsonConvert.DeserializeObject<User[]>(File.ReadAllText("admins.json"));
+            modelBuilder.Entity<User>().HasData(
+                    admins
+                );
         }
     }
 }

@@ -32,6 +32,11 @@ namespace BSTeamSearch.Controllers
             if (ModelState.IsValid)
             {
                 ControllerContext.HttpContext.Session.SetString("name", user.Name);
+                if (_userRepository.Get(user.Name).IsAdmin)
+                {
+                    return RedirectPermanent("../Admin/Index");
+                }
+                
                 return RedirectPermanent("../Applications/All");
             }
 

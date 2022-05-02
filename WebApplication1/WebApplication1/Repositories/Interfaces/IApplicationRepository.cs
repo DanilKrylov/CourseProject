@@ -7,7 +7,7 @@ namespace BSTeamSearch.Repositories.Interfaces
     {
         public IEnumerable<Application> GetAll();
 
-        public IEnumerable<Application> FiltrationGet(string userName, bool onlyLiked, bool cupsAscending, string searchString);
+        public IEnumerable<Application> FiltrationGet(string userName, bool onlyLiked, bool cupsAscending, string searchString, int minCups, int maxCups);
 
         public IEnumerable<Application> GetUserApplications(string UserName);
 

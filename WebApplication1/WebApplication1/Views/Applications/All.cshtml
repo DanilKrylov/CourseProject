@@ -3,9 +3,45 @@
     Layout = "_MainLayout";
 }
 @model List<Application>
+    <div class="filtration_params">
+            <div class="content__search__rangeCost">
+                <div class="content__search__rangeCost__values">
+                    <span class="text1">Кубки от</span>
+                    <span class="text1" id="content__search__rangeCost__range1">0</span>
+                    <span class="text1">Кубки до </span>
+                    <span class="text1" id="content__search__rangeCost__range2">1250</span>
+                </div>
+                <div class="content__search__rangeCost__container">
+                    <div class="slider-track"></div>
+                    <input name="minCups" type="range" min="0" max="1250" value="0" id="slider-1" oninput="slideOne()">
+                    <input name ="maxCups" type="range" min="0" max="1250" value="1250" id="slider-2" oninput="slideTwo()">
+                </div>
+            </div>
+            <div>
+                <p>Только лайкнутые</p>
+                <select id="onlyLiked">
+                    <option value="false">нет</option>
+                    <option value="true">да</option>
+                </select>
+            </div>
+            <div>
+                <select id="cupsAscending">
+                    <option value="true">кубки по возрастанию</option>
+                    <option value="false">кубки по убыванию</option>
+                </select>
+            </div>
+            <div>
+                <input type="text" id="searchString" />
+            </div>
+            <div>
+                <input type="button" name="Поиск" onclick="submitParams('/Applications/Filtration')" />
+            </div>
+        <script src="~/js/slider.js"></script>
+        <script src="~/js/sendFiltrationParams.js"></script>
+        <link href="~/css/slider.css" rel="stylesheet" />
+    </div>
 @{
-    <form action="/" method="post"></form>
-    if (Model is null )
+    if (Model is null || Model.Count == 0)
     {
         <div>
             <p>ничего не найдено</p>
@@ -13,30 +49,8 @@
     }
     else
     {
-<div>
-    <div class="filtration_params">
-        <form asp-controller="Applications" asp-action="Filtration">
-            <div>
-                <p>Только лайкнутые</p>
-                <select name="onlyLiked">
-                    <option value="false">нет</option>
-                    <option value="true">да</option>
-                </select>
-            </div>
-            <div>
-                <select name="cupsAscending">
-                    <option value="true">кубки по возрастанию</option>
-                    <option value="false">кубки по убыванию</option>
-                </select>
-            </div>
-            <div>
-                <input type="text" name="searchString" />
-            </div>
-            <div>
-                <input type="submit" name="Поиск" />
-            </div>
-        </form>
-    </div>
+<div class="application__content">
+    
     @foreach (var elem in Model)
     {
         string countClass = "count" + elem.Id;

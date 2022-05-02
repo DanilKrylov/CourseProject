@@ -12,6 +12,8 @@ namespace BSTeamSearch.Models
 
         public Discord Discord { get; set; }
 
+        public bool IsAdmin { get; set; } = false;
+
         public List<Application> Applications { get; set; } = new();
 
         public User(string name, string password)

@@ -20,21 +20,29 @@ namespace BSTeamSearch.Repositories.Realisation
             _db = DataBase;
         }
 
-        public IEnumerable GetAll()
+        public IEnumerable GetAll(string seacrhString)
         {
-            var users = _db.User.Include(c => c.Discord).ToList();
+            if(seacrhString is null)
+            {
+                seacrhString = string.Empty;
+            }
+            var users = _db.User.Where(c => c.Name.ToLower().Contains(seacrhString.ToLower()) && c.IsAdmin == false).Include(c => c.Discord).ToList();
             return users;
         }
 
         public User Get(string userName)
         {
-            var user = _db.User.Include(c => c.Discord).FirstOrDefault(c => c.Name == userName);
+            var user =  _db.User.Include(c => c.Discord)
+                .Include(c => c.Applications)
+                    .ThenInclude(c => c.Brawler)
+                .Include(c => c.Applications)
+                    .ThenInclude(c => c.Likes)
+                .FirstOrDefault(c => c.Name == userName);
 
             if(user is null)
             {
                 throw new ObjectNotFoundInDataBaseException();
             }
-
             return user;
         }
 

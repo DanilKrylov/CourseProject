@@ -6,7 +6,7 @@ namespace BSTeamSearch.Repositories.Interfaces
 {
     public interface IUserRepository
     {
-        public IEnumerable GetAll();
+        public IEnumerable GetAll(string seacrhString);
 
         public User Get(string userName);
 

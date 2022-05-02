@@ -1,0 +1,41 @@
+﻿@{
+    Layout = null;
+}
+@model User
+
+
+<div>
+    <span>username: </span>
+    <span>@Model.Name</span>
+</div>
+<div>
+    <span>админ: </span>
+    <span>@Model.IsAdmin</span>
+</div>
+<div>
+    <span>discord: </span>
+    <span>@Model.Discord.Name#@Model.Discord.DiscordSharp</span>
+</div>
+
+@{
+    foreach (var application in Model.Applications)
+    {
+        var id = "application" + application.Id;
+        <div class="container" id="@id">
+            <div class="row">
+                <div class="col-6">
+                    <img height="150" width="150" src=@application.Brawler.Img />
+                    <p>@application.Brawler.Name</p>
+                </div>
+                <div class="col-6">
+                    <p>@application.UserName</p>
+                    <p>@application.CountOfCups</p>
+                    <span>@application.Likes.Count</span>
+                </div>
+                <div>
+                    <button onclick="removeApplication(@application.Id, '@application.UserName')">Удалить</button>
+                </div>
+            </div>
+        </div>
+    }
+}

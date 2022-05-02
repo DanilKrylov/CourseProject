@@ -1,0 +1,36 @@
+﻿
+@{
+    Layout = null;
+}
+@model List<Application>
+@{
+    if (Model is null || Model.Count == 0)
+    {
+        <div>
+            <p>ничего не найдено</p>
+        </div>
+    }
+    else
+    {
+            @foreach (var elem in Model)
+            {
+                var id = "application" + elem.Id;
+                <div class="container" id="@id">
+                    <div class="row">
+                        <div class="col-6">
+                            <img height="150" width="150" src=@elem.Brawler.Img />
+                            <p>@elem.Brawler.Name</p>
+                        </div>
+                        <div class="col-6">
+                            <p>@elem.UserName</p>
+                            <p>@elem.CountOfCups</p>
+                            <span >@elem.Likes.Count</span>
+                        </div>
+                        <div>
+                            <button onclick="removeApplication(@elem.Id, '@elem.UserName')">Удалить</button>
+                        </div>
+                    </div>
+                </div>
+            }
+    }
+}

@@ -77,7 +77,7 @@ namespace BSTeamSearch.Repositories.Realisation
             {
                 throw new ObjectNotFoundInDataBaseException();
             }
-
+            _db.Likes.RemoveRange(_likeRepository.GetLikesForApplication(application.Id));
             _db.Application.Remove(application);
             user.Applications.Remove(application);
             _db.SaveChanges();
@@ -98,7 +98,7 @@ namespace BSTeamSearch.Repositories.Realisation
             _db.SaveChanges();
         }
 
-        public IEnumerable<Application> FiltrationGet(string userName, bool onlyLiked, bool cupsAscending, string searchString)
+        public IEnumerable<Application> FiltrationGet(string userName, bool onlyLiked, bool cupsAscending, string searchString, int minCups, int maxCups)
         {
             List<Application> applications = new List<Application>(); 
             if (onlyLiked)
@@ -119,7 +119,7 @@ namespace BSTeamSearch.Repositories.Realisation
                                            c.UserName.ToLower().Contains(searchString)).ToList();
             }
 
-            applications = applications.OrderBy(c => c.CountOfCups).ToList();
+            applications = applications.Where(c => c.CountOfCups >= minCups && c.CountOfCups <= maxCups).OrderBy(c => c.CountOfCups).ToList();
             if (!cupsAscending)
             {
                 applications.Reverse();
