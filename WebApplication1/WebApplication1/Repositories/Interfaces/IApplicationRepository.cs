@@ -5,7 +5,7 @@ namespace BSTeamSearch.Repositories.Interfaces
 {
     public interface IApplicationRepository
     {
-        public IEnumerable<Application> GetAll();
+        public IEnumerable<Application> GetAllWithout(string userNameIgnore);
 
         public IEnumerable<Application> FiltrationGet(string userName, bool onlyLiked, bool cupsAscending, string searchString, int minCups, int maxCups);
 

@@ -36,9 +36,10 @@ namespace BSTeamSearch.Repositories.Realisation
             application.Likes = _likeRepository.GetLikesForApplication(application.Id).ToList();
             return application;
         }
-        public IEnumerable<Application> GetAll()
+        public IEnumerable<Application> GetAllWithout(string userNameIgnore)
         {
-            var applications = _db.Application.Include(c => c.Brawler)
+            var applications = _db.Application.Where(c => c.UserName != userNameIgnore)
+                                              .Include(c => c.Brawler)
                                               .Include(c => c.User)
                                               .ToList();
             
@@ -110,7 +111,7 @@ namespace BSTeamSearch.Repositories.Realisation
             }
             else
             {
-                applications = GetAll().ToList();
+                applications = GetAllWithout(userName).ToList();
             }
             if(searchString is not null)
             {

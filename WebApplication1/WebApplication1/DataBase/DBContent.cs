@@ -18,6 +18,9 @@ namespace BSTeamSearch.DataBase
 
         public DbSet<Like> Likes { get; set; }
 
+        public DbSet<Group> Groups { get; set; }
+
+        public DbSet<Message> Messages { get; set; }
         public DBContent(DbContextOptions<DBContent> options) : base(options)
         {
             //Database.EnsureDeleted();

@@ -25,38 +25,39 @@ namespace BSTeamSearch.Controllers
         }
         public IActionResult All()
         {
-            if (!ControllerContext.HttpContext.Session.Keys.Contains("name"))
+            var userName = ControllerContext.HttpContext.Session.GetString("name");
+            if (userName is null || !_userRepository.UserIsRegistered(userName))
             {
                 return View("../NotRegistered");
             }
-            ViewBag.UserName = ControllerContext.HttpContext.Session.GetString("name");
-            var applicationList = _applicationRepository.GetAll();
+            ViewBag.UserName = userName;
+            var applicationList = _applicationRepository.GetAllWithout(userName);
             return View(applicationList);
         }
 
-
         public IActionResult Add()
         {
-            if (!ControllerContext.HttpContext.Session.Keys.Contains("name"))
+            var userName = ControllerContext.HttpContext.Session.GetString("name");
+            if (userName is null || !_userRepository.UserIsRegistered(userName))
             {
                 return View("../NotRegistered");
             }
-            
+
             ViewBag.Brawlers = _brawlerRepository.GetAll();
 
-            ViewBag.UserName = ControllerContext.HttpContext.Session.GetString("name");
+            ViewBag.UserName = userName;
             return View();
         }
 
         [HttpPost]
         public IActionResult Add(Application application)
         {
-            if (!ControllerContext.HttpContext.Session.Keys.Contains("name"))
+            var userName = ControllerContext.HttpContext.Session.GetString("name");
+            if (userName is null || !_userRepository.UserIsRegistered(userName))
             {
                 return View("../NotRegistered");
             }
-
-            string userName = ControllerContext.HttpContext.Session.GetString("name");
+            ViewBag.UserName = userName;
             _applicationRepository.Add(application, userName);
 
             return RedirectPermanent("../Applications/All");
@@ -65,15 +66,16 @@ namespace BSTeamSearch.Controllers
 
         public IActionResult My()
         {
-            if (!ControllerContext.HttpContext.Session.Keys.Contains("name"))
+            var userName = ControllerContext.HttpContext.Session.GetString("name");
+            if (userName is null || !_userRepository.UserIsRegistered(userName))
             {
                 return View("../NotRegistered");
             }
+
             IEnumerable userApplications;
-            ViewBag.UserName = ControllerContext.HttpContext.Session.GetString("name");
+            ViewBag.UserName = userName;
             try
             {
-                string userName = ControllerContext.HttpContext.Session.GetString("name");
                 userApplications = _applicationRepository.GetUserApplications(userName);
             }
             catch(ObjectNotFoundInDataBaseException)
@@ -105,12 +107,12 @@ namespace BSTeamSearch.Controllers
         [HttpPost]
         public IActionResult Filtration(bool onlyLiked, bool cupsAscending, string searchString, int minCups, int maxCups)
         {
-            if (!ControllerContext.HttpContext.Session.Keys.Contains("name"))
+            var userName = ControllerContext.HttpContext.Session.GetString("name");
+            if (userName is null || !_userRepository.UserIsRegistered(userName))
             {
                 return View("../NotRegistered");
             }
 
-            string userName = ControllerContext.HttpContext.Session.GetString("name");
             ViewBag.UserName = userName;
             var applicationList = _applicationRepository.FiltrationGet(userName, onlyLiked, cupsAscending, searchString, minCups, maxCups).ToList();
 

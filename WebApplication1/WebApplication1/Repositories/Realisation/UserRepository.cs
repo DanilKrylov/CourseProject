@@ -52,5 +52,30 @@ namespace BSTeamSearch.Repositories.Realisation
             _db.Discords.Add(new Discord(user.DiscordName, user.DiscordSharp, user.Name));
             _db.SaveChanges();
         }
+
+        public bool UserIsRegistered(string userName)
+        {
+            var user = _db.User.FirstOrDefault(c => c.Name == userName);
+            if(user is null)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public bool PasswordIsCorrect(string userName, string password)
+        {
+            var user = _db.User.FirstOrDefault(c => c.Name == userName);
+            if (user is null)
+            {
+                throw new ObjectNotFoundInDataBaseException();
+            }
+
+            if(user.Password == password)
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }

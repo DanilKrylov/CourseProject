@@ -1,5 +1,6 @@
 using System;
 using BSTeamSearch.DataBase;
+using BSTeamSearch.Hubs;
 using BSTeamSearch.Repositories.Interfaces;
 using BSTeamSearch.Repositories.Realisation;
 using Microsoft.AspNetCore.Builder;
@@ -31,7 +32,9 @@ namespace BSTeamSearch
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IBrawlerRepository, BrawlerRepository>();
             services.AddTransient<ILikeRepository, LikeRepository>();
+            services.AddTransient<IGroupRepository, GroupRepository>();
 
+            services.AddSignalR();
             services.AddControllersWithViews();
         }
 
@@ -47,8 +50,11 @@ namespace BSTeamSearch
             app.UseRouting();
             app.UseSession();
             app.UseAuthorization();
+
+
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapHub<ChatHub>("/chat");
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Registration}/{action=Registration}");

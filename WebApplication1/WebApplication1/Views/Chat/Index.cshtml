@@ -1,0 +1,68 @@
+﻿@{
+    Layout = "_MainLayout";
+}
+@model List<Group>
+
+<h1>Все чаты</h1>
+<div class="user__groups">
+    @{
+        if (Model is null)
+        {
+            <div>Покачто нет чатов</div>
+        }
+        foreach (var group in Model)
+        {
+            string chatName;
+            if (ViewBag.UserName == group.FirstUserName)
+            {
+                chatName = group.SecondUserName;
+            }
+            else
+            {
+                chatName = group.FirstUserName;
+            }
+            <div id="@group.Id" onclick="getChat(@group.Id)">
+                <div class="chatName">
+                    <p>@chatName</p>
+                </div>
+                <div class="lastMessage">
+                    @if (group.Messages.Count != 0)
+                    {
+                        <p>@group.GetLastMessage().Text</p>
+                    }
+                </div>
+            </div>
+        }
+    }
+</div>
+<h1>выбраный чат</h1>
+<div class="current__chat">
+    @{
+        if (ViewBag.CurrentChat is not null)
+        {
+            var chat = (Group)ViewBag.CurrentChat;
+            var messages = chat.Messages;
+            messages.OrderBy(c => c.Time);
+            messages.Reverse();
+        <div id="@chat.Id" class="chat__info">
+            <div id="inputForm">
+                <input type="text" id="message" />
+                <input type="button" id="sendBtn" onclick="send()" value="Отправить" />
+            </div>
+            <div id="chatroom"></div>
+            
+            @foreach (var message in messages)
+            {
+                <p>------------------------------------------</p>
+                <p>сообщение от: @message.UserName</p>
+                <span>@message.Text</span>
+                <span>@message.Time.Hour:@message.Time.Minute</span>
+                <p>------------------------------------------</p>
+            }
+        </div>
+        }
+    }
+</div>
+
+<script src="~/js/signalr/dist/browser/signalr.min.js"></script>
+<script src="~/js/chat.js"></script> 

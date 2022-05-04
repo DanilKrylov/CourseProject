@@ -21,7 +21,7 @@ namespace BSTeamSearch.Controllers
         [HttpPost]
         public IActionResult Registration(RegistrationViewModel user)
         {
-            if (!(user.Name is null) && AutorisationService.UserIsRegistered(_userRepository, user.Name))
+            if (!(user.Name is null) && _userRepository.UserIsRegistered(user.Name))
             {
                 ModelState.AddModelError("Name", "Данный логин уже занят, попробуйте какойто другой");
             }

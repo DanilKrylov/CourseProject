@@ -24,8 +24,8 @@ namespace BSTeamSearch.Controllers
         public IActionResult AutorisationToTheSite(AutorisationViewModel user)
         {
             if(!(user.Name is null || user.Password is null) && 
-               (!AutorisationService.UserIsRegistered(_userRepository, user.Name) ||
-               !AutorisationService.PasswordIsCorrect(_userRepository, user.Name, user.Password)))
+               (!_userRepository.UserIsRegistered( user.Name) ||
+               !_userRepository.PasswordIsCorrect( user.Name, user.Password)))
             {
                 ModelState.AddModelError("Password", "Логгин или пароль указаны неправильно");
             }
@@ -36,7 +36,7 @@ namespace BSTeamSearch.Controllers
                 {
                     return RedirectPermanent("../Admin/Index");
                 }
-                
+                ViewBag.UserName = user.Name;
                 return RedirectPermanent("../Applications/All");
             }
 

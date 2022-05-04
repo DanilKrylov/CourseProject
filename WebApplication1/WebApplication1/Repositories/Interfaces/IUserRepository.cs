@@ -11,5 +11,9 @@ namespace BSTeamSearch.Repositories.Interfaces
         public User Get(string userName);
 
         public void Add(RegistrationViewModel user);
+
+        public bool UserIsRegistered(string userName);
+
+        public bool PasswordIsCorrect(string userName, string password);
     }
 }

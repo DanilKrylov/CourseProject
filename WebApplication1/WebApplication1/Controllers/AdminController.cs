@@ -20,13 +20,13 @@ namespace BSTeamSearch.Controllers
         }
         public IActionResult Index()
         {
-            string name = HttpContext.Session.GetString("name");
-            if(name is null)
+            string userName = HttpContext.Session.GetString("name");
+            if(userName is null || !_userRepository.UserIsRegistered(userName))
             {
                 return View("../NotRegistered");
             }
 
-            if (!_userRepository.Get(name).IsAdmin)
+            if (!_userRepository.Get(userName).IsAdmin)
             {
                 return RedirectToAction("Applications/All");
             }
@@ -37,7 +37,7 @@ namespace BSTeamSearch.Controllers
         public IActionResult GetApplications(bool onlyLiked, bool cupsAscending, string searchString, int minCups, int maxCups)
         {
             string userName = ControllerContext.HttpContext.Session.GetString("name");
-            if (userName is null || !_userRepository.Get(userName).IsAdmin)
+            if (userName is null || !_userRepository.UserIsRegistered(userName) || !_userRepository.Get(userName).IsAdmin)
             {
                 return null;
             }
@@ -51,7 +51,7 @@ namespace BSTeamSearch.Controllers
         public bool RemoveApplication(int id, string userName)
         {
             var name = HttpContext.Session.GetString("name");
-            if ( name is null || !_userRepository.Get(name).IsAdmin)
+            if (userName is null || userName != name || !_userRepository.UserIsRegistered(name) || !_userRepository.Get(name).IsAdmin)
             {
                 return false;
             }
@@ -69,8 +69,8 @@ namespace BSTeamSearch.Controllers
         [HttpPost]
         public IActionResult GetUsers(string searchString)
         {
-            var name = HttpContext.Session.GetString("name");
-            if (name is null || !_userRepository.Get(name).IsAdmin)
+            var userName = HttpContext.Session.GetString("name");
+            if (userName is null || !_userRepository.UserIsRegistered(userName) || !_userRepository.Get(userName).IsAdmin)
             {
                 return View();
             }
@@ -80,7 +80,7 @@ namespace BSTeamSearch.Controllers
         public IActionResult GetUserData(string userName)
         {
             var name = HttpContext.Session.GetString("name");
-            if (name is null || !_userRepository.Get(name).IsAdmin)
+            if (userName is null || userName != name  || !_userRepository.UserIsRegistered(name) || !_userRepository.Get(userName).IsAdmin)
             {
                 return View();
             }

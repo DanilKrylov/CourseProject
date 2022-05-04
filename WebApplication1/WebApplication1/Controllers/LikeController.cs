@@ -11,18 +11,20 @@ namespace BSTeamSearch.Controllers
     public class LikeController : Controller
     {
         private readonly ILikeRepository _likeRepository;
-        public LikeController(ILikeRepository likeRepository)
+        private readonly IUserRepository _userRepository;
+        public LikeController(ILikeRepository likeRepository, IUserRepository userRepository)
         {
             _likeRepository = likeRepository;
+            _userRepository = userRepository;
         }
         [HttpPost]
         public bool Like(string applicationId)
         {
-            if (!ControllerContext.HttpContext.Session.Keys.Contains("name"))
+            var userName = ControllerContext.HttpContext.Session.GetString("name");
+            if (userName is null || !_userRepository.UserIsRegistered(userName))
             {
                 return false;
             }
-            string userName = ControllerContext.HttpContext.Session.GetString("name");
             _likeRepository.AddLike(userName, Convert.ToInt32(applicationId));
             return true;
         }
@@ -30,12 +32,11 @@ namespace BSTeamSearch.Controllers
         [HttpPost] 
         public bool RemoveLike(string applicationId)
         {
-            if (!ControllerContext.HttpContext.Session.Keys.Contains("name"))
+            var userName = ControllerContext.HttpContext.Session.GetString("name");
+            if (userName is null || !_userRepository.UserIsRegistered(userName))
             {
                 return false;
             }
-
-            string userName = ControllerContext.HttpContext.Session.GetString("name");
             _likeRepository.RemoveLike(userName, Convert.ToInt32(applicationId));
             return true;
         }
