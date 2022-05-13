@@ -1,0 +1,33 @@
+﻿@{
+    Layout = null;
+}
+@model AutorisationViewModel
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Вход</title>
+    <script src="@Url.Content("~/scripts/jquery.validate.unobtrusive.js")" type="text/javascript"></script>
+</head>
+<body>
+
+    <form asp-action="AutorisationToTheSite" asp-controller="Autorisation" asp-antiforgery="true">
+        <div>
+            <p>Ваше имя:</p>
+            <input asp-for="Name">
+        </div>
+        <div>
+            <p>Ваш пароль:</p>
+            <input asp-for="Password" />
+        </div>
+        <div>
+            <span asp-validation-for="Password" data-valmsg-for=Password data-valmsg-replace="true"></span>
+        </div>
+        <div>
+            <input type="submit" value="enter" />
+        </div>
+    </form>
+</body>
+</html>

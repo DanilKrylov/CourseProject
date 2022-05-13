@@ -1,0 +1,71 @@
+﻿@{ 
+    Layout = null;
+}
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>admin</title>
+    <script src="~/jquery-ajax-unobtrusive/jquery-1.7.1.min.js"></script>
+    <script src="~/js/admin.js"></script>
+    <script src="~/jquery-ajax-unobtrusive/JavaScript.js"></script>
+</head>
+<body>
+    <div class="admin__applications">
+        <div class="application__filtration__params">
+            <div class="content__search__rangeCost">
+                <div class="content__search__rangeCost__values">
+                    <span class="text1">Кубки от</span>
+                    <span class="text1" id="content__search__rangeCost__range1">0</span>
+                    <span class="text1">Кубки до </span>
+                    <span class="text1" id="content__search__rangeCost__range2">1250</span>
+                </div>
+                <div class="content__search__rangeCost__container">
+                    <div class="slider-track"></div>
+                    <input name="minCups" type="range" min="0" max="1250" value="0" id="slider-1" oninput="slideOne()">
+                    <input name="maxCups" type="range" min="0" max="1250" value="1250" id="slider-2" oninput="slideTwo()">
+                </div>
+            </div>
+            <div>
+                <p>Только лайкнутые</p>
+                <select id="onlyLiked">
+                    <option value="false">нет</option>
+                    <option value="true">да</option>
+                </select>
+            </div>
+            <div>
+                <select id="cupsAscending">
+                    <option value="true">кубки по возрастанию</option>
+                    <option value="false">кубки по убыванию</option>
+                </select>
+            </div>
+            <div>
+                <input type="text" id="application__searchString" />
+            </div>
+            <div>
+                <input type="button" name="Поиск" onclick="submitParams('/Admin/AdminApplications')" />
+            </div>
+            <script src="~/js/slider.js"></script>
+            <script src="~/js/sendFiltrationParams.js"></script>
+            <link href="~/css/slider.css" rel="stylesheet" />
+        </div>
+        <div class="application__content">
+
+        </div>
+    </div>
+    <div class="admin__users">
+        <div class="user__filtration__params">
+            <div>
+                <input type="text" id="user__searchString" />
+            </div>
+            <div>
+                <input type="button" name="Поиск" onclick="getUsers()" />
+            </div>
+        </div>
+        <div class="user__content">
+
+        </div>
+    </div>
+    <div class="selected__user__data">
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,36 @@
+﻿
+@{
+    Layout = "_MainLayout";
+}
+@model IEnumerable<Application>
+
+
+@{
+    if (Model is null)
+    {
+        <div>
+            <p>Покачто нет заявок</p>
+        </div>
+    }
+    else
+    {
+        <div>
+            @foreach (var elem in Model)
+            {
+            <div class="container">
+                <div class="row">
+                    <div class="col-6">
+                        <img height="150" width="150" src=@elem.Brawler.Img />
+                        <p>@elem.Brawler.Name</p>
+                    </div>
+                    <div class="col-6">
+                        <p>@elem.User.Name</p>
+                        <p>@elem.CountOfCups</p>
+                        <a asp-controller="Applications" asp-action="DeleteApplication" asp-route-applicationId=@elem.Id>Удалить</a>
+                    </div>
+                </div>
+            </div>
+            }
+        </div>
+    }
+}

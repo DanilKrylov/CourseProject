@@ -1,0 +1,25 @@
+﻿@{
+    Layout = null;
+}
+@model Group
+@{
+    var messages = Model.Messages;
+    messages.OrderBy(c => c.Time);
+    messages.Reverse();
+    <div id="@Model.Id" class="chat__info">
+        <div id="inputForm">
+            <input type="text" id="message" />
+            <input type="button" id="sendBtn" onclick="send()" value="Отправить" />
+        </div>
+        <div id="chatroom"></div>
+        @foreach (var message in Model.Messages)
+        {
+            <p>------------------------------------------</p>
+            <p>сообщение от: @message.UserName</p>
+            <span>@message.Text</span>
+            <span>@message.Time.Hour:@message.Time.Minute</span>
+            <p>------------------------------------------</p>
+        }
+    </div>
+}
+
