@@ -10,13 +10,14 @@ namespace BSTeamSearch.Repositories.Realisation
     public class BrawlerRepository : IBrawlerRepository
     {
         private readonly DBContent _db;
-        public BrawlerRepository(DBContent DataBase)
+        public BrawlerRepository(DBContent dataBase)
         {
-            _db = DataBase;
+            _db = dataBase;
         }
+
         public IEnumerable GetAll()
         {
-            var brawlers =  _db.Brawler.ToList();
+            var brawlers = _db.Brawler.ToList();
             return brawlers;
         }
 
@@ -24,10 +25,11 @@ namespace BSTeamSearch.Repositories.Realisation
         {
             var brawler = _db.Brawler.FirstOrDefault(c => c.Name == brawlerName);
 
-            if(brawler is null)
+            if (brawler is null)
             {
                 throw new ObjectNotFoundInDataBaseException();
             }
+
             return brawler;
         }
 

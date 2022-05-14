@@ -3,21 +3,42 @@
 }
 @model User
 
-
-<div>
-    <span>username: </span>
-    <span>@Model.Name</span>
-</div>
-<div>
-    <span>админ: </span>
-    <span>@Model.IsAdmin</span>
-</div>
-<div>
-    <span>discord: </span>
-    <span>@Model.Discord.Name#@Model.Discord.DiscordSharp</span>
-</div>
-
-@{
+@if (Model is not null)
+{
+    <div>
+        <span>username: </span>
+        <span>@Model.Name</span>
+    </div>
+    <div>
+        <span>BrawlStars никнейм</span>
+        <span>@Model.BrawlAccountName</span>
+    </div>
+    <div>
+        <span>Возраст</span>
+        <span>@Model.Age</span>
+    </div>
+    <div>
+        <span>Email</span>
+        <span>@Model.Email</span>
+    </div>
+    <div>
+        <span>Количесвто кубков</span>
+        <span>@Model.CountOfCups</span>
+    </div>
+    <div>
+        @{
+            if (Model.IsBanned)
+            {
+                <span>Пользователь забанен</span>
+                <button id="banButton" onclick="unban('@Model.Name')">Разбанить</button>
+            }
+            else
+            {
+                <span>Пользователи не забанен</span>
+                <button id="banButton" onclick="ban('@Model.Name')">Забанить</button>
+            }
+        }
+    </div>
     foreach (var application in Model.Applications)
     {
         var id = "application" + application.Id;

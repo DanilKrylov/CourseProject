@@ -17,6 +17,7 @@ namespace BSTeamSearch.Controllers
             _likeRepository = likeRepository;
             _userRepository = userRepository;
         }
+
         [HttpPost]
         public bool Like(string applicationId)
         {
@@ -25,11 +26,12 @@ namespace BSTeamSearch.Controllers
             {
                 return false;
             }
+
             _likeRepository.AddLike(userName, Convert.ToInt32(applicationId));
             return true;
         }
 
-        [HttpPost] 
+        [HttpPost]
         public bool RemoveLike(string applicationId)
         {
             var userName = ControllerContext.HttpContext.Session.GetString("name");
@@ -37,6 +39,7 @@ namespace BSTeamSearch.Controllers
             {
                 return false;
             }
+
             _likeRepository.RemoveLike(userName, Convert.ToInt32(applicationId));
             return true;
         }

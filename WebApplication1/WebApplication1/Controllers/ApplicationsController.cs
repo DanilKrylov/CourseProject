@@ -5,6 +5,7 @@ using System.Linq;
 using BSTeamSearch.Exceptions;
 using BSTeamSearch.Models;
 using BSTeamSearch.Repositories.Interfaces;
+using BSTeamSearch.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -23,6 +24,7 @@ namespace BSTeamSearch.Controllers
             _applicationRepository = applicationRepository;
             _brawlerRepository = brawlerRepository;
         }
+
         public IActionResult All()
         {
             var userName = ControllerContext.HttpContext.Session.GetString("name");
@@ -30,6 +32,7 @@ namespace BSTeamSearch.Controllers
             {
                 return View("../NotRegistered");
             }
+
             ViewBag.UserName = userName;
             var applicationList = _applicationRepository.GetAllWithout(userName);
             return View(applicationList);
@@ -50,19 +53,25 @@ namespace BSTeamSearch.Controllers
         }
 
         [HttpPost]
-        public IActionResult Add(Application application)
+        public IActionResult Add(ApplicationAddViewModel application)
         {
             var userName = ControllerContext.HttpContext.Session.GetString("name");
             if (userName is null || !_userRepository.UserIsRegistered(userName))
             {
                 return View("../NotRegistered");
             }
+
+            if (!ModelState.IsValid)
+            {
+                ViewBag.Brawlers = _brawlerRepository.GetAll();
+                return View(application);
+            }
+
             ViewBag.UserName = userName;
-            _applicationRepository.Add(application, userName);
+            _applicationRepository.Add(application.GetApplicationModel(userName));
 
             return RedirectPermanent("../Applications/All");
         }
-
 
         public IActionResult My()
         {
@@ -78,30 +87,33 @@ namespace BSTeamSearch.Controllers
             {
                 userApplications = _applicationRepository.GetUserApplications(userName);
             }
-            catch(ObjectNotFoundInDataBaseException)
+            catch (ObjectNotFoundInDataBaseException)
             {
                 return View(null);
             }
+
             return View(userApplications);
         }
 
-        public IActionResult DeleteApplication(int applicationId)
+        [HttpPost]
+        public bool Delete(int applicationId)
         {
-            int Id = Convert.ToInt32(applicationId);
-            #warning Сделать подтверждение пользователем
-            if (!ControllerContext.HttpContext.Session.Keys.Contains("name"))
+            var userName = HttpContext.Session.GetString("name");
+            if (userName is null || !_userRepository.UserIsRegistered(userName))
             {
-                return Redirect("../NotRegistered");
+                return false;
             }
 
             try
             {
-                _applicationRepository.Delete(_applicationRepository.Get(Id), ControllerContext.HttpContext.Session.GetString("name"));
+                _applicationRepository.Delete(_applicationRepository.Get(applicationId), userName);
             }
             catch
             {
+                return false;
             }
-            return RedirectPermanent("~/Applications/All");
+
+            return true;
         }
 
         [HttpPost]
@@ -116,7 +128,7 @@ namespace BSTeamSearch.Controllers
             ViewBag.UserName = userName;
             var applicationList = _applicationRepository.FiltrationGet(userName, onlyLiked, cupsAscending, searchString, minCups, maxCups).ToList();
 
-            return View( applicationList);
+            return View(applicationList);
         }
     }
 }

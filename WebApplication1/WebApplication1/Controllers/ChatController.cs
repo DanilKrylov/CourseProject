@@ -22,7 +22,7 @@ namespace BSTeamSearch.Controllers
         public IActionResult Index()
         {
             var userName = HttpContext.Session.GetString("name");
-            if(userName is null || !_userRepository.UserIsRegistered(userName)) 
+            if (userName is null || !_userRepository.UserIsRegistered(userName))
             {
                 return Redirect("../NotRegistered");
             }
@@ -31,6 +31,7 @@ namespace BSTeamSearch.Controllers
             ViewBag.UserName = userName;
             return View(groups);
         }
+
         [HttpGet]
         public IActionResult SendMessage(string toUser)
         {
@@ -41,17 +42,16 @@ namespace BSTeamSearch.Controllers
             }
 
             ViewBag.UserName = userName;
-            if (userName == toUser)
+            if (userName == toUser || !_userRepository.UserIsRegistered(toUser))
             {
                 return View("../Chat/Index", _groupRepository.GetGroupsForUser(userName));
             }
-
 
             if (!_groupRepository.GroupIsCreated(userName, toUser))
             {
                 _groupRepository.CreateGroup(userName, toUser);
             }
-            
+
             ViewBag.CurrentChat = _groupRepository.GetGroup(userName, toUser);
             return View("../Chat/Index", _groupRepository.GetGroupsForUser(userName));
         }

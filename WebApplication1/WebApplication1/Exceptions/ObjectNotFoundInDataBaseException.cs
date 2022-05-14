@@ -6,7 +6,6 @@ namespace BSTeamSearch.Exceptions
     {
         public ObjectNotFoundInDataBaseException() : base()
         {
-
         }
     }
 }

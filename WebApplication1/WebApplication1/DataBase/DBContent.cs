@@ -14,8 +14,6 @@ namespace BSTeamSearch.DataBase
 
         public DbSet<Brawler> Brawler { get; set; }
 
-        public DbSet<Discord> Discords { get; set; }
-
         public DbSet<Like> Likes { get; set; }
 
         public DbSet<Group> Groups { get; set; }
@@ -23,9 +21,9 @@ namespace BSTeamSearch.DataBase
         public DbSet<Message> Messages { get; set; }
         public DBContent(DbContextOptions<DBContent> options) : base(options)
         {
-            //Database.EnsureDeleted();
             Database.EnsureCreated();
         }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Brawler>().HasData(
@@ -37,9 +35,7 @@ namespace BSTeamSearch.DataBase
                 });
 
             User[] admins = JsonConvert.DeserializeObject<User[]>(File.ReadAllText("admins.json"));
-            modelBuilder.Entity<User>().HasData(
-                    admins
-                );
+            modelBuilder.Entity<User>().HasData(admins);
         }
     }
 }

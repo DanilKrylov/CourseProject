@@ -8,7 +8,6 @@ using BSTeamSearch.Models;
 using BSTeamSearch.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-
 namespace BSTeamSearch.Repositories.Realisation
 {
     public class GroupRepository : IGroupRepository
@@ -18,17 +17,18 @@ namespace BSTeamSearch.Repositories.Realisation
         {
             _db = dataBase;
         }
+
         public void CreateGroup(string firstUserName, string secondUserName)
         {
-            if(firstUserName is null || secondUserName is null)
+            if (firstUserName is null || secondUserName is null)
             {
                 throw new ArgumentNullException();
             }
+
             var group = new Group(firstUserName, secondUserName);
             _db.Groups.Add(group);
             _db.SaveChanges();
         }
-
 
         public Group GetGroup(int groupId)
         {
@@ -37,8 +37,10 @@ namespace BSTeamSearch.Repositories.Realisation
             {
                 throw new ObjectNotFoundInDataBaseException();
             }
+
             return group;
         }
+
         public Group GetGroup(string firstUserName, string secondUserName)
         {
             var group = _db.Groups.Include(c => c.Messages).FirstOrDefault(c => (c.FirstUserName == firstUserName &&
@@ -49,6 +51,7 @@ namespace BSTeamSearch.Repositories.Realisation
             {
                 throw new ObjectNotFoundInDataBaseException();
             }
+
             return group;
         }
 
@@ -60,7 +63,6 @@ namespace BSTeamSearch.Repositories.Realisation
             return groups;
         }
 
-
         public bool GroupIsCreated(int groupId)
         {
             var group = _db.Groups.FirstOrDefault(c => c.Id == groupId);
@@ -71,6 +73,7 @@ namespace BSTeamSearch.Repositories.Realisation
 
             return true;
         }
+
         public bool GroupIsCreated(string firstUserName, string secondUserName)
         {
             var group = _db.Groups.FirstOrDefault(c => (c.FirstUserName == firstUserName &&

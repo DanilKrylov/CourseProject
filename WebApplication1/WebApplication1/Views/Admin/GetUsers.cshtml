@@ -1,27 +1,23 @@
-﻿@{ 
+﻿@{
     Layout = null;
 }
 @model IEnumerable<User>
 
-@{ 
-    foreach(var user in Model)
-            { 
-    <div class="user__info" id="@user.Name">
-        <div>
-            <span>username: </span>
-            <span>@user.Name</span>
+@{
+    foreach (var user in Model)
+    {
+        <div class="user__info" id="@user.Name">
+            <div>
+                <span>username: </span>
+                <span>@user.Name</span>
+            </div>
+            <div>
+                <span>админ: </span>
+                <span>@user.IsAdmin</span>
+            </div>
+            <div>
+                <button onclick="getUserInfo('@user.Name')">больше данных</button>
+            </div>
         </div>
-        <div>
-            <span>админ: </span>
-            <span>@user.IsAdmin</span>
-        </div>
-        <div>
-            <span>discord: </span>
-            <span>@user.Discord.Name#@user.Discord.DiscordSharp</span>
-        </div>
-        <div>
-            <button onclick="getUserInfo('@user.Name')">больше данных</button>
-        </div>
-    </div>
-            }
+    }
 }

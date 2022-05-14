@@ -17,7 +17,7 @@
         <div>
             @foreach (var elem in Model)
             {
-            <div class="container">
+            <div class="container" id="@elem.Id">
                 <div class="row">
                     <div class="col-6">
                         <img height="150" width="150" src=@elem.Brawler.Img />
@@ -26,11 +26,12 @@
                     <div class="col-6">
                         <p>@elem.User.Name</p>
                         <p>@elem.CountOfCups</p>
-                        <a asp-controller="Applications" asp-action="DeleteApplication" asp-route-applicationId=@elem.Id>Удалить</a>
+                        <button onclick="deleteApplication(@elem.Id)">Удалить</button>
                     </div>
                 </div>
             </div>
             }
         </div>
+        <script src="~/js/deleteApplication.js"></script>
     }
 }

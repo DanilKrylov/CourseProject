@@ -5,7 +5,6 @@
         data: {
             minCups: $("#slider-1").val(),
             maxCups: $("#slider-2").val(),
-            onlyLiked: $("#onlyLiked").val(),
             cupsAscending: $("#cupsAscending").val(),
             searchString: $("#application__searchString").val(),
         },

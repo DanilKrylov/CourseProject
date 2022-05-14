@@ -17,7 +17,7 @@ namespace BSTeamSearch.Models
         public string SecondUserName { get; set; }
         public User SecondUser { get; set; }
 
-        public List<Message> Messages { get; set; } = new();
+        public List<Message> Messages { get; set; } = new ();
 
         public Group(string firstUserName, string secondUserName)
         {
@@ -27,14 +27,15 @@ namespace BSTeamSearch.Models
 
         public Message GetLastMessage()
         {
-            if(Messages.Count == 0)
+            if (Messages.Count == 0)
             {
                 throw new Exception("NoMessagesOnGroup");
             }
+
             Message lastMessage = Messages.FirstOrDefault();
-            foreach(Message message in Messages)
+            foreach (Message message in Messages)
             {
-                if(lastMessage.Time < message.Time)
+                if (lastMessage.Time < message.Time)
                 {
                     lastMessage = message;
                 }

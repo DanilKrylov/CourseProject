@@ -10,7 +10,6 @@ namespace BSTeamSearch.Repositories.Realisation
 {
     public class ApplicationRepository : IApplicationRepository
     {
-
         private readonly DBContent _db;
         private readonly ILikeRepository _likeRepository;
         private readonly IUserRepository _userRepository;
@@ -22,31 +21,34 @@ namespace BSTeamSearch.Repositories.Realisation
             _brawlerRepository = brawlerRepository;
             _likeRepository = likeRepository;
         }
+
         public Application Get(int applicationId)
         {
             var application = _db.Application.Include(c => c.Brawler)
                                   .Include(c => c.User)
                                   .FirstOrDefault(c => c.Id == applicationId);
 
-            if(application is null)
+            if (application is null)
             {
                 _db.Dispose();
                 throw new ObjectNotFoundInDataBaseException();
             }
+
             application.Likes = _likeRepository.GetLikesForApplication(application.Id).ToList();
             return application;
         }
+
         public IEnumerable<Application> GetAllWithout(string userNameIgnore)
         {
             var applications = _db.Application.Where(c => c.UserName != userNameIgnore)
                                               .Include(c => c.Brawler)
                                               .Include(c => c.User)
                                               .ToList();
-            
-            foreach(var application in applications)
+            foreach (var application in applications)
             {
                 application.Likes = _likeRepository.GetLikesForApplication(application.Id).ToList();
             }
+
             return applications;
         }
 
@@ -60,10 +62,12 @@ namespace BSTeamSearch.Repositories.Realisation
             {
                 throw new ObjectNotFoundInDataBaseException();
             }
+
             foreach (var application in applications)
             {
                 application.Likes = _likeRepository.GetLikesForApplication(application.Id).ToList();
             }
+
             return applications;
         }
 
@@ -74,37 +78,40 @@ namespace BSTeamSearch.Repositories.Realisation
             {
                 throw new ObjectNotFoundInDataBaseException();
             }
+
             if (user.Applications.IndexOf(application) == -1)
             {
                 throw new ObjectNotFoundInDataBaseException();
             }
+
             _db.Likes.RemoveRange(_likeRepository.GetLikesForApplication(application.Id));
             _db.Application.Remove(application);
             user.Applications.Remove(application);
             _db.SaveChanges();
         }
 
-        public void Add(Application application, string userName)
+        public void Add(Application application)
         {
-            application.UserName = userName;
-            if(application.Brawler is null)
+            if (application.Brawler is null)
             {
                 application.Brawler = _brawlerRepository.Get(application.BrawlerName);
             }
-            if(application.User is null)
+
+            if (application.User is null)
             {
                 application.User = _userRepository.Get(application.UserName);
             }
+
             _db.Application.Add(application);
             _db.SaveChanges();
         }
 
         public IEnumerable<Application> FiltrationGet(string userName, bool onlyLiked, bool cupsAscending, string searchString, int minCups, int maxCups)
         {
-            List<Application> applications = new List<Application>(); 
+            List<Application> applications = new List<Application>();
             if (onlyLiked)
             {
-                foreach(Like like in _likeRepository.GetLikesFromUser(userName))
+                foreach (Like like in _likeRepository.GetLikesFromUser(userName))
                 {
                     applications.Add(Get(like.ApplicationId));
                 }
@@ -113,7 +120,8 @@ namespace BSTeamSearch.Repositories.Realisation
             {
                 applications = GetAllWithout(userName).ToList();
             }
-            if(searchString is not null)
+
+            if (searchString is not null)
             {
                 searchString = searchString.ToLower();
                 applications = applications.Where(c => c.BrawlerName.ToLower().Contains(searchString) ||

@@ -23,12 +23,18 @@ namespace BSTeamSearch.Controllers
         [HttpPost]
         public IActionResult AutorisationToTheSite(AutorisationViewModel user)
         {
-            if(!(user.Name is null || user.Password is null) && 
-               (!_userRepository.UserIsRegistered( user.Name) ||
-               !_userRepository.PasswordIsCorrect( user.Name, user.Password)))
+            if (!(user.Name is null || user.Password is null) &&
+               (!_userRepository.UserIsRegistered(user.Name) ||
+               !_userRepository.PasswordIsCorrect(user.Name, user.Password)))
             {
                 ModelState.AddModelError("Password", "Логгин или пароль указаны неправильно");
             }
+
+            if (_userRepository.UserIsRegistered(user.Name) && _userRepository.Get(user.Name).IsBanned)
+            {
+                ModelState.AddModelError("Name", "Ваш аккаунт забанен");
+            }
+
             if (ModelState.IsValid)
             {
                 ControllerContext.HttpContext.Session.SetString("name", user.Name);
@@ -36,6 +42,7 @@ namespace BSTeamSearch.Controllers
                 {
                     return RedirectPermanent("../Admin/Index");
                 }
+
                 ViewBag.UserName = user.Name;
                 return RedirectPermanent("../Applications/All");
             }

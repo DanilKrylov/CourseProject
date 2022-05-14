@@ -16,6 +16,7 @@ namespace BSTeamSearch.Hubs
         {
             _db = db;
         }
+
         public async Task Send(string message, string groupId)
         {
             var name = Context.GetHttpContext().Session.GetString("name");
@@ -23,7 +24,8 @@ namespace BSTeamSearch.Hubs
             {
                 return;
             }
-            _db.Messages.Add(new Message(message,int.Parse(groupId), name));
+
+            _db.Messages.Add(new Message(message, int.Parse(groupId), name));
             _db.SaveChanges();
             var time = DateTime.Now.Hour + ":" + DateTime.Now.Minute;
             await Clients.Group(groupId.ToString()).SendAsync("Send", message, time, name);
@@ -39,6 +41,7 @@ namespace BSTeamSearch.Hubs
 
             await Groups.AddToGroupAsync(Context.ConnectionId, groupId);
         }
+
         public async Task RemoveFromChat(string groupId)
         {
             var name = Context.GetHttpContext().Session.GetString("name");
@@ -46,6 +49,7 @@ namespace BSTeamSearch.Hubs
             {
                 return;
             }
+
             await Groups.RemoveFromGroupAsync(Context.ConnectionId, groupId);
         }
     }

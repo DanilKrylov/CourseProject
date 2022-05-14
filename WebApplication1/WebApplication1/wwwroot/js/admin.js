@@ -1,4 +1,5 @@
 ﻿
+
 $(document).ready(function () {
     submitParams("/Admin/GetApplications");
     getUsers()
@@ -49,6 +50,47 @@ function getUserInfo(userName) {
         success: function (response) {
             console.log(response)
             $(".selected__user__data").html(response)
+        }
+    })
+}
+
+
+function ban(userName) {
+    $.ajax({
+        type: "POST",
+        url: "/Admin/BanUser",
+        data: {
+            userName: userName
+        },
+        success: function (response) {
+            if (response) {
+                var button = $('#banButton')
+                button.html("Разбанить")
+                button.attr('onclick', "unban('" + userName + "')")
+            }
+            else {
+                alert("error")
+            }
+        }
+    })
+}
+
+function unban(userName) {
+    $.ajax({
+        type: "POST",
+        url: "/Admin/UnbanUser",
+        data: {
+            userName: userName
+        },
+        success: function (response) {
+            if (response) {
+                var button = $('#banButton')
+                button.html("Забанить")
+                button.attr('onclick', "ban('" + userName + "')")
+            }
+            else {
+                alert("error")
+            }
         }
     })
 }

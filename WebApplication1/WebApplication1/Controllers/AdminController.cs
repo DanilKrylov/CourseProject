@@ -18,10 +18,11 @@ namespace BSTeamSearch.Controllers
             _userRepository = userRepository;
             _applicationRepository = applicationRepository;
         }
+
         public IActionResult Index()
         {
             string userName = HttpContext.Session.GetString("name");
-            if(userName is null || !_userRepository.UserIsRegistered(userName))
+            if (userName is null || !_userRepository.UserIsRegistered(userName))
             {
                 return View("../NotRegistered");
             }
@@ -30,31 +31,34 @@ namespace BSTeamSearch.Controllers
             {
                 return RedirectToAction("Applications/All");
             }
+
             return View();
         }
 
         [HttpPost]
-        public IActionResult GetApplications(bool onlyLiked, bool cupsAscending, string searchString, int minCups, int maxCups)
+        public IActionResult GetApplications(bool cupsAscending, string searchString, int minCups, int maxCups)
         {
             string userName = ControllerContext.HttpContext.Session.GetString("name");
             if (userName is null || !_userRepository.UserIsRegistered(userName) || !_userRepository.Get(userName).IsAdmin)
             {
                 return null;
             }
-            
+
             ViewBag.UserName = userName;
-            var applicationList = _applicationRepository.FiltrationGet(userName, onlyLiked, cupsAscending, searchString, minCups, maxCups).ToList();
+            var applicationList = _applicationRepository.FiltrationGet(userName, false, cupsAscending, searchString, minCups, maxCups).ToList();
 
             return View(applicationList);
         }
+
         [HttpPost]
         public bool RemoveApplication(int id, string userName)
         {
             var name = HttpContext.Session.GetString("name");
-            if (userName is null || userName != name || !_userRepository.UserIsRegistered(name) || !_userRepository.Get(name).IsAdmin)
+            if (userName is null || userName == name || !_userRepository.UserIsRegistered(name) || !_userRepository.Get(name).IsAdmin)
             {
                 return false;
             }
+
             try
             {
                 _applicationRepository.Delete(_applicationRepository.Get(id), userName);
@@ -63,6 +67,7 @@ namespace BSTeamSearch.Controllers
             {
                 return false;
             }
+
             return true;
         }
 
@@ -74,17 +79,47 @@ namespace BSTeamSearch.Controllers
             {
                 return View();
             }
+
             return View(_userRepository.GetAll(searchString));
         }
 
         public IActionResult GetUserData(string userName)
         {
             var name = HttpContext.Session.GetString("name");
-            if (userName is null || userName != name  || !_userRepository.UserIsRegistered(name) || !_userRepository.Get(userName).IsAdmin)
+            if (userName is null || userName == name || !_userRepository.UserIsRegistered(name) || _userRepository.Get(userName).IsAdmin)
             {
                 return View();
             }
+
             return View(_userRepository.Get(userName));
+        }
+
+        [HttpPost]
+        public bool BanUser(string userName)
+        {
+            var adminName = HttpContext.Session.GetString("name");
+            if (adminName is null || !_userRepository.UserIsRegistered(adminName) ||
+                !_userRepository.UserIsRegistered(adminName) || userName == adminName)
+            {
+                return false;
+            }
+
+            _userRepository.BanUser(userName);
+            return true;
+        }
+
+        [HttpPost]
+        public bool UnbanUser(string userName)
+        {
+            var adminName = HttpContext.Session.GetString("name");
+            if (adminName is null || !_userRepository.UserIsRegistered(adminName) ||
+                !_userRepository.UserIsRegistered(adminName) || userName == adminName)
+            {
+                return false;
+            }
+
+            _userRepository.UnbanUser(userName);
+            return true;
         }
     }
 }

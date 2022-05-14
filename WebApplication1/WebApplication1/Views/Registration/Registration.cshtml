@@ -31,28 +31,38 @@
             <span asp-validation-for="ConfirmPassword" class="field-validation-valid" data-valmsg-for="ConfirmPassword" data-valmsg-replace="true"></span>
         </div>
         <div>
-            <p>Введвите ваш дискорд</p>
-            <input asp-for="DiscordName" />
-            <span asp-validation-for="DiscordName" class="field-validation-valid" data-valmsg-for="ConfirmPassword" data-valmsg-replace="true"></span>
-            <span>#</span>
-            <input type="number" asp-for="DiscordSharp" required />
-            <span asp-validation-for="DiscordSharp" class="field-validation-valid" data-valmsg-for="ConfirmPassword" data-valmsg-replace="true"></span>
+            <p>Введите Email</p>
+            <input type="email" asp-for="Email" />
+            <span asp-validation-for="Email"></span>
         </div>
-        <div>
 
-        </div>
         <div>
-            <input type="submit" value="enter" />
+            <p>Введите ваш возраст</p>
+            <input required type="text" asp-for="Age" />
+            <span asp-validation-for="Age"></span>
         </div>
+
         <div>
-            <p>Уже есть аккаунт?<p>
-                <a href="~/Autorisation/AutorisationToTheSite">Войти</a>
+            <p>Введите ваш никнейм в BrawlStars</p>
+            <input type="text" asp-for="BrawlAccountName" />
+            <span asp-validation-for="BrawlAccountName"></span>
+        </div>
+
+        <div>
+            <p>Введите общее количество кубков на вашем аккауте</p>
+            <input required type="text" asp-for="CountOfCups" />
+            <span asp-validation-for="CountOfCups"></span>
+        </div>
+
+        <div>
+            <input type="submit" value="Зарегестрироваться" />
         </div>
     </form>
     <div>
-        <i class="heart fa fa-heart-o"></i>
+        <p>Уже есть аккаунт?<p>
+            <a href="~/Autorisation/AutorisationToTheSite">Войти</a>
     </div>
 </body>
 </html>
 
-<h1>форма регистрации</h1>
+

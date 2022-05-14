@@ -51,15 +51,13 @@ namespace BSTeamSearch
             app.UseSession();
             app.UseAuthorization();
 
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapHub<ChatHub>("/chat");
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Registration}/{action=Registration}");
-
             });
-        } 
+        }
     }
 }

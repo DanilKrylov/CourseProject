@@ -9,12 +9,12 @@ namespace BSTeamSearch.Repositories.Interfaces
 
         public IEnumerable<Application> FiltrationGet(string userName, bool onlyLiked, bool cupsAscending, string searchString, int minCups, int maxCups);
 
-        public IEnumerable<Application> GetUserApplications(string UserName);
+        public IEnumerable<Application> GetUserApplications(string userName);
 
         public void Delete(Application application, string userName);
 
         public Application Get(int applicationId);
 
-        public void Add(Application application, string userName);
+        public void Add(Application application);
     }
 }

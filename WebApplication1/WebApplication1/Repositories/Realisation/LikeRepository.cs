@@ -16,12 +16,14 @@ namespace BSTeamSearch.Repositories.Realisation
         {
             _db = dataBase;
         }
+
         public void AddLike(string userName, int applicationId)
         {
-            if(!(_db.Likes.FirstOrDefault(c => c.UserName == userName && c.ApplicationId == applicationId) is null))
+            if (!(_db.Likes.FirstOrDefault(c => c.UserName == userName && c.ApplicationId == applicationId) is null))
             {
                 throw new Exception("Like already placed");
             }
+
             _db.Likes.Add(new Like(userName, applicationId));
             _db.SaveChanges();
         }
@@ -31,6 +33,7 @@ namespace BSTeamSearch.Repositories.Realisation
             var likes = _db.Likes.Where(c => c.ApplicationId == applicationId).ToList();
             return likes;
         }
+
         public IEnumerable<Like> GetLikesFromUser(string userName)
         {
             return _db.Likes.Where(c => c.UserName == userName)
@@ -45,7 +48,7 @@ namespace BSTeamSearch.Repositories.Realisation
             {
                 throw new Exception("Like is not in the database");
             }
-             
+
             _db.Likes.Remove(likeToRemove);
             _db.SaveChanges();
         }

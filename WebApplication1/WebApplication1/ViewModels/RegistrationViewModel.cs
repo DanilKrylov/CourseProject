@@ -22,12 +22,20 @@ namespace BSTeamSearch.ViewModels
 
         [Compare("Password", ErrorMessage = "Поле пароля и поле подтверждения пароля должны совпадать")]
         public string ConfirmPassword { get; set; }
+        [Required(ErrorMessage = "Поле возраста не может быть пустым")]
+        [Range(7, 100, ErrorMessage ="Допустимое значение для возраста от 7 до 100 лет")]
+        public int Age { get; set; }
 
-        [Required(ErrorMessage ="Поле не может быть пустым")]
-        public string DiscordName { get; set; }
+        [Required(ErrorMessage = "Поле почты не может быть пустым")]
+        [StringLength(25, ErrorMessage = "Максимальная длина почты 25 смволов")]
+        public string Email { get; set; }
 
-        [Required(ErrorMessage = "Поле не может быть пустым")]
-        [Range(1000,9999, ErrorMessage = "Длина должна быть равной четырем символам")]
-        public int DiscordSharp { get; set; }
+        [Required(ErrorMessage = "Поле общего количества кубков не может быть пустым")]
+        [Range(0, 50000, ErrorMessage ="Допустимое значение общего количества кубков от 0 до 50.000 ")]
+        public int CountOfCups { get; set; }
+
+        [Required(ErrorMessage = "Поле никнейма не может быть пустым")]
+        [StringLength(12, MinimumLength = 3, ErrorMessage = "Длина имени должна быть от 3 до 12 символов")]
+        public string BrawlAccountName { get; set; }
     }
 }

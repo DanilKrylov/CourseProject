@@ -10,15 +10,17 @@ namespace BSTeamSearch.Annotations
             {
                 string str = obj.ToString();
 
-                foreach(char elem in str)
+                foreach (char elem in str)
                 {
-                    if(elem.ToString() == " ")
+                    if (elem.ToString() == " ")
                     {
                         return false;
                     }
                 }
+
                 return true;
             }
+
             return true;
         }
     }
