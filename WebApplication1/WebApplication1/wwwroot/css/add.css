@@ -1,0 +1,55 @@
+﻿.add {
+    padding-top: 5%;
+}
+
+.add__content {
+    max-width: 500px;
+    height: auto;
+    margin: 0 auto;
+    background: white;
+    border-radius: 5px;
+}
+
+.add__content__title {
+    height: 40px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 2px solid var(--darkGray-color);
+}
+
+.add__content__form {
+    padding: 20px;
+}
+
+input,
+select,
+textarea {
+    background: var(--gray-color);
+    border-radius: 5px;
+    height: 40px;
+    width: 100%;
+    padding: 0 10px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 20px;
+    color: #000;
+    margin: 0 0 20px 0;
+}
+
+textarea {
+    height: 200px;
+    padding: 10px;
+    margin: 0;
+}
+
+.add__submit {
+    margin: 20px 0 0 0;
+    background: var(--green-color);
+    color: white;
+    cursor: pointer;
+}
+
+    .add__submit:hover {
+        background: var(--greenHover-color);
+    }

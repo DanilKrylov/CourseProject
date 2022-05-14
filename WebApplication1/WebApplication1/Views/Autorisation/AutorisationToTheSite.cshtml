@@ -8,27 +8,35 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
+    <link href="~/css/nullStyle.css" rel="stylesheet" />
+    <link href="~/css/site.css" rel="stylesheet" />
+    <link href="~/css/autorisation.css" rel="stylesheet" />
     <title>Вход</title>
     <script src="@Url.Content("~/scripts/jquery.validate.unobtrusive.js")" type="text/javascript"></script>
 </head>
 <body>
-
-    <form asp-action="AutorisationToTheSite" asp-controller="Autorisation" asp-antiforgery="true">
-        <div>
-            <p>Ваше имя:</p>
-            <input asp-for="Name">
-            <span asp-validation-for="Name"></span>
+    <div class="container">
+        <div class="autorisation">
+            <div class="autorisation__content">
+                <div class="autorisation__content__title"><span class="text2">Вход</span></div>
+                <div class="autorisation__content__form">
+                    <form asp-action="AutorisationToTheSite" asp-controller="Autorisation" asp-antiforgery="true">
+                            <p class="text3 autorisation__input__label">Ваш логин:</p>
+                            <input class="autorisation__input" asp-for="Name" type="text">
+                            <span asp-validation-for="Name"></span>
+                            <p class="text3 autorisation__input__label">Ваш пароль:</p>
+                            <input class="autorisation__input" asp-for="Password" type="password"/>
+                            <span asp-validation-for="Password" data-valmsg-for=Password
+                                data-valmsg-replace="true"></span>
+                            <input class="text1 autorisation__submit" type="submit" value="Войти" />
+                    </form>
+                    <div class="text3 autorisation__content__text">
+                        <span>Еще нет аккаунта?</span>
+                        <a href="../Registration/Registration" class="autorisation__content__link">Регистрация</a>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div>
-            <p>Ваш пароль:</p>
-            <input asp-for="Password" />
-        </div>
-        <div>
-            <span asp-validation-for="Password" data-valmsg-for=Password data-valmsg-replace="true"></span>
-        </div>
-        <div>
-            <input type="submit" value="enter" />
-        </div>
-    </form>
+    </div>
 </body>
 </html>

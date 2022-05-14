@@ -3,45 +3,34 @@
     Layout = "_MainLayout";
 }
 @model ApplicationAddViewModel
-<form asp-action="Add" asp-controller="Applications" method="post">
-    <div>
-        <p>Выберите бравлера</p>
-        <div>
-            <select asp-for="BrawlerName">
-                @{
-                    foreach (Brawler elem in ViewBag.Brawlers)
-                    {
-                        <option>@elem.Name</option>
+    <link href="~/css/add.css" rel="stylesheet" />
+<div class="add">
+    <div class="add__content">
+        <div class="add__content__title"><span class="text2">Создание заявки</span></div>
+        <div class="add__content__form">
+            <form asp-action="Add" asp-controller="Applications" method="post">
+                <p class="text3 add__input__label">Выберите бравлера:</p>
+                <select asp-for="BrawlerName">
+                    @{
+                        foreach (Brawler elem in ViewBag.Brawlers)
+                        {
+                            <option>@elem.Name</option>
+                        }
                     }
-                }
-            </select>
-        </div>
-
-        <div>
-            <p>Выберите количество кубков</p>
-            <div>
+                </select>
+                <p class="text3 add__input__label">Выберите количество кубков:</p>
                 <input type="number" required asp-for="CountOfCups" />
                 <span asp-validation-for="CountOfCups"></span>
-            </div>
-        </div>
-
-        <div>
-            <p>Есть ли у вас возможость общаться по голосовому чату?</p>
-            <div>
+                <p class="text3 add__input__label">Есть ли у вас возможость общаться по голосовому чату?</p>
                 <select asp-for="HasVoiceChat">
                     <option value="false">Нет</option>
                     <option value="true">Да</option>
                 </select>
-            </div>
-        </div>
-
-        <div>
-            <p>Напишите пару слов о себе и о данной заявке(например в каком режиме хотите играть, в какое время вам удобно играть)</p>
-            <div>
-                <input type="text" asp-for="Description"/>
+                <p class="text3 add__input__label">Напишите пару слов о себе и о данной заявке</p>
+                <textarea type="text" asp-for="Description" placeholder="например в каком режиме хотите играть, в какоевремя вам удобно играть"></textarea>
                 <span asp-validation-for="Description"></span>
-            </div>
+                <input class="add__submit" type="submit" value="Отправить" />
+            </form>
         </div>
     </div>
-    <input type="submit" value="Отправить" />
-</form>
+</div>

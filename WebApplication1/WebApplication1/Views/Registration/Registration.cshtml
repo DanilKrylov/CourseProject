@@ -11,56 +11,61 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
+    <link href="~/css/nullStyle.css" rel="stylesheet" />
+    <link href="~/css/site.css" rel="stylesheet" />
+    <link href="~/css/autorisation.css" rel="stylesheet" />
     <title>Регистрация</title>
 </head>
 <body>
-    <form form method="post" data-ajax="true" data-ajax-complete="myComplete" asp-action="Registration" asp-controller="Registration" asp-antiforgery="true">
-        <div>
-            <p>Ваше имя:</p>
-            <input asp-for="Name" />
-            <span asp-validation-for="Name" class="field-validation-valid" data-valmsg-for="Name" data-valmsg-replace="true"></span>
-        </div>
-        <div>
-            <p>Ваш пароль:</p>
-            <input asp-for="Password" />
-            <span asp-validation-for="Password" class="field-validation-valid" data-valmsg-for="Password" data-valmsg-replace="true"></span>
-        </div>
-        <div>
-            <p>Подтвердите ваш пароль:</p>
-            <input asp-for="ConfirmPassword" />
-            <span asp-validation-for="ConfirmPassword" class="field-validation-valid" data-valmsg-for="ConfirmPassword" data-valmsg-replace="true"></span>
-        </div>
-        <div>
-            <p>Введите Email</p>
-            <input type="email" asp-for="Email" />
-            <span asp-validation-for="Email"></span>
-        </div>
+    <div class="container">
+        <div class="autorisation">
+            <div class="autorisation__content">
+                <div class="autorisation__content__title"><span class="text2">Регистрация</span></div>
+                <div class="autorisation__content__form">
+                    <form form method="post" data-ajax="true" data-ajax-complete="myComplete" asp-action="Registration"
+                          asp-controller="Registration" asp-antiforgery="true">
+                        <p class="text3 autorisation__input__label">Ваш логин:</p>
+                        <input class="autorisation__input" asp-for="Name" type="text">
+                        <span asp-validation-for="Name" class="field-validation-valid" data-valmsg-for="Name"
+                              data-valmsg-replace="true"></span>
+                        <br />
+                        <p class="text3 autorisation__input__label">Ваш пароль:</p>
+                        <input class="autorisation__input" asp-for="Password" type="password" />
+                        <span asp-validation-for="Password" class="field-validation-valid" data-valmsg-for="Password"
+                              data-valmsg-replace="true"></span>
+                        <br />
+                        <p class="text3 autorisation__input__label">Повторите ваш пароль:</p>
+                        <input class="autorisation__input" asp-for="ConfirmPassword" type="password" />
+                        <span asp-validation-for="ConfirmPassword" class="field-validation-valid"
+                              data-valmsg-for="ConfirmPassword" data-valmsg-replace="true"></span>
+                        <br />
+                        <p class="text3 autorisation__input__label">Введите Email</p>
+                        <input class="autorisation__input" asp-for="Email" type="email" />
+                        <span asp-validation-for="Email"></span>
+                        <br />
+                        <p class="text3 autorisation__input__label">Введите ваш возраст:</p>
+                        <input required class="autorisation__input" asp-for="Age" type="number" />
+                        <span asp-validation-for="Age" class="field-validation-valid"
+                              data-valmsg-for="ConfirmPassword" data-valmsg-replace="true"></span>
+                        <br />
+                        <p class="text3 autorisation__input__label">Введите ваш никнейм в BrawlStars:</p>
+                        <input required class="autorisation__input" asp-for="BrawlAccountName" type="text" />
+                        <span asp-validation-for="BrawlAccountName"></span>
+                        <br />
+                        <p class="text3 autorisation__input__label">Введите общее количество кубков на вашем аккауте:</p>
+                        <input required class="autorisation__input" asp-for="CountOfCups" type="text" required />
+                        <span asp-validation-for="CountOfCups"></span>
 
-        <div>
-            <p>Введите ваш возраст</p>
-            <input required type="text" asp-for="Age" />
-            <span asp-validation-for="Age"></span>
-        </div>
 
-        <div>
-            <p>Введите ваш никнейм в BrawlStars</p>
-            <input type="text" asp-for="BrawlAccountName" />
-            <span asp-validation-for="BrawlAccountName"></span>
+                        <input class="text1 autorisation__submit" type="submit" value="Зарегестрироваться" />
+                    </form>
+                    <div class="text3 autorisation__content__text">
+                        <span>Еще нет аккаунта?</span>
+                        <a href="../Autorisation/AutorisationToTheSite" class="autorisation__content__link">Войти</a>
+                    </div>
+                </div>
+            </div>
         </div>
-
-        <div>
-            <p>Введите общее количество кубков на вашем аккауте</p>
-            <input required type="text" asp-for="CountOfCups" />
-            <span asp-validation-for="CountOfCups"></span>
-        </div>
-
-        <div>
-            <input type="submit" value="Зарегестрироваться" />
-        </div>
-    </form>
-    <div>
-        <p>Уже есть аккаунт?<p>
-            <a href="~/Autorisation/AutorisationToTheSite">Войти</a>
     </div>
 </body>
 </html>
