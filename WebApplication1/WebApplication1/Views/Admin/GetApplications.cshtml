@@ -7,30 +7,31 @@
     if (Model is null || Model.Count == 0)
     {
         <div>
-            <p>ничего не найдено</p>
+            <p class="text2">ничего не найдено</p>
         </div>
     }
     else
     {
             @foreach (var elem in Model)
             {
-                var id = "application" + elem.Id;
-                <div class="container" id="@id">
-                    <div class="row">
-                        <div class="col-6">
-                            <img height="150" width="150" src=@elem.Brawler.Img />
-                            <p>@elem.Brawler.Name</p>
+                <div class="admin__content__item">
+                        <div class="admin__item__first">
+                            <div class="admin_item__photo">
+                                <img height="150" width="150" src=@elem.Brawler.Img />
+                            </div>
+                            <div class="admin__item__info">
+                                <div class="text2 admin__info__title">@elem.Brawler.Name</div>
+                                <div class="text3 admin__info__cup">Кубков: <span>@elem.CountOfCups</span></div>
+                                <div class="text3 admin__info__desc">@elem.Description</div>
+                            </div>
                         </div>
-                        <div class="col-6">
-                            <p>@elem.UserName</p>
-                            <p>@elem.CountOfCups</p>
-                            <span >@elem.Likes.Count</span>
-                        </div>
-                        <div>
-                            <button onclick="removeApplication(@elem.Id, '@elem.UserName')">Удалить</button>
+                        <div class="admin__item__control">
+                            <div class="text3 admin__control__name">@elem.UserName</div>
+                            <div class="text3 admin__control__like">Лайков: @elem.Likes.Count</div>
+                            <button class="text3 admin__control__button">Удалить</button>
+                            <button class="text3 admin__control__button__delete">Удалить</button>
                         </div>
                     </div>
-                </div>
             }
     }
 }

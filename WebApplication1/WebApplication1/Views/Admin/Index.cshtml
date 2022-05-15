@@ -7,9 +7,10 @@
     <script src="~/jquery-ajax-unobtrusive/jquery-1.7.1.min.js"></script>
     <script src="~/js/admin.js"></script>
     <script src="~/jquery-ajax-unobtrusive/JavaScript.js"></script>
+    <link href="~/css/adminPanel.css" rel="stylesheet" />
 </head>
 <body>
-    <div class="admin__applications">
+    <!--<div class="admin__applications">
         <div class="application__filtration__params">
             <div class="content__search__rangeCost">
                 <div class="content__search__rangeCost__values">
@@ -43,8 +44,30 @@
         <div class="application__content">
 
         </div>
+    </div>-->
+
+    <div class="admin">
+        <div class="admin__container">
+            <div class="admin__header">
+                <div admin-type="applications" class="text3 admin__header__item">
+                    Все заявки
+                </div>
+                <div admin-type="users" class="text3 admin__header__item">
+                    Пользователи
+                </div>
+            </div>
+            <div class="admin__content">
+                <div class="admin__content__items _active__adminMenu" id="applications">
+                    
+                </div>
+                <div class="admin__content__items" id="users">
+                    
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="admin__users">
+
+    <!--<div class="admin__users">
         <div class="user__filtration__params">
             <div>
                 <input type="text" id="user__searchString" />
@@ -59,6 +82,6 @@
     </div>
     <div class="selected__user__data">
 
-    </div>
+    </div>-->
 </body>
 </html>
