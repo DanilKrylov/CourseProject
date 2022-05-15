@@ -3,48 +3,50 @@
     Layout = "_MainLayout";
 }
 @model List<Application>
+     <div class="search">
+    <div class="text2 application__title">Просмотр заявок</div>
     <div class="filtration_params">
-            <div class="content__search__rangeCost">
-                <div class="content__search__rangeCost__values">
-                    <span class="text1">Кубки от</span>
-                    <span class="text1" id="content__search__rangeCost__range1">0</span>
-                    <span class="text1">Кубки до </span>
-                    <span class="text1" id="content__search__rangeCost__range2">1250</span>
-                </div>
-                <div class="content__search__rangeCost__container">
-                    <div class="slider-track"></div>
-                    <input name="minCups" type="range" min="0" max="1250" value="0" id="slider-1" oninput="slideOne()">
-                    <input name ="maxCups" type="range" min="0" max="1250" value="1250" id="slider-2" oninput="slideTwo()">
-                </div>
+        <div class="content__search__rangeCost">
+            <div class="content__search__rangeCost__values">
+                <span class="text3">Кубки от</span>
+                <span class="text3" id="content__search__rangeCost__range1">0</span>
+                <span class="text3">Кубки до </span>
+                <span class="text3" id="content__search__rangeCost__range2">1250</span>
             </div>
-            <div>
-                <p>Только лайкнутые</p>
-                <select id="onlyLiked">
-                    <option value="false">нет</option>
-                    <option value="true">да</option>
-                </select>
+            <div class="content__search__rangeCost__container">
+                <div class="slider-track"></div>
+                <input name="minCups" type="range" min="0" max="1250" value="0" id="slider-1" oninput="slideOne()">
+                <input name="maxCups" type="range" min="0" max="1250" value="1250" id="slider-2" oninput="slideTwo()">
             </div>
-            <div>
-                <select id="cupsAscending">
-                    <option value="true">кубки по возрастанию</option>
-                    <option value="false">кубки по убыванию</option>
-                </select>
-            </div>
-            <div>
-                <input type="text" id="application__searchString" />
-            </div>
-            <div>
-                <input type="button" name="Поиск" onclick="submitParams('/Applications/Filtration')" />
-            </div>
+        </div>
+        <div class="filtration_params__select">
+            <span class="text3">Только лайкнутые</span>
+            <select class="text3" id="onlyLiked">
+                <option value="false">нет</option>
+                <option value="true">да</option>
+            </select>
+            <select class="text3" id="cupsAscending">
+                <option value="true">кубки по возрастанию</option>
+                <option value="false">кубки по убыванию</option>
+            </select>
+        </div>
+        <div class="filtration_params__input">
+            <input type="text" class="text3" id="application__searchString" />
+            <input type="button" class="text3" name="Поиск" value="Поиск" onclick="submitParams('/Applications/Filtration')" />
+        </div>
+    </div>
+</div>
         <script src="~/js/slider.js"></script>
         <script src="~/js/sendFiltrationParams.js"></script>
-        <link href="~/css/slider.css" rel="stylesheet" />
-    </div>
-@{
-    if (Model is null || Model.Count == 0)
+        <link href="~/css/search.css" rel="stylesheet" />
+        <link href="~/css/application.css" rel="stylesheet" />
+
+         <div class="application">
+        <div class="application__content">
+    @if (Model is null || Model.Count == 0)
     {
         <div>
-            <p>ничего не найдено</p>
+            <p class="text3">ничего не найдено</p>
         </div>
     }
     else
@@ -65,22 +67,26 @@
         {
             likeClass = "liked";
         }
-        <div class="container">
-            <div class="row">
-                <div class="col-6">
-                    <img height="150" width="150" src=@elem.Brawler.Img />
-                    <p>@elem.Brawler.Name</p>
+            <div class="application__item" id="@elem.Id">
+                <div class="application__item__first">
+                    <div class="application__item__photo">
+                        <img height="150" width="150" src=@elem.Brawler.Img />
+                    </div>
+                    <div class="application__item__info">
+                        <div class="text2 application__info__title">@elem.Brawler.Name</div>
+                        <div class="text3 application__info__cup">Кубков: <span>@elem.CountOfCups</span></div>
+                        <div class="text3 application__info__desc">@elem.Description</div>
+                    </div>
                 </div>
-                <div class="col-6">
-                    <a asp-action="SendMessage" asp-controller="Chat" asp-route-toUser="@elem.UserName">Отправить соообщение</a>
-                    <p>@elem.UserName</p>
-                    <p>@elem.CountOfCups</p>
-                    <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
-                         width="50px" height="50px" viewBox="0 0 256.000000 256.000000"
-                         preserveAspectRatio="xMidYMid meet" onclick="Like(@elem.Id)">
+                <div class="application__item__control">
+                    <div class="text3 application__control__name">@elem.UserName</div>
+                    <div class="application__control__like">
+                    <svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="50px" height="50px"
+                        viewBox="0 0 256.000000 256.000000" preserveAspectRatio="xMidYMid meet"
+                        onclick="Like(@elem.Id)">
 
-                        <g transform="translate(0.000000,256.000000) scale(0.100000,-0.100000)"
-                           fill="#000000" stroke="none">
+                        <g transform="translate(0.000000,256.000000) scale(0.100000,-0.100000)" fill="#000000"
+                            stroke="none">
                             <path class="@likeClass @firstId" d="M1045 2066 c-48 -18 -86 -60 -102 -115 -18 -57 -19 -1241 -1 -1259
                                     19 -19 824 -17 858 3 14 8 32 17 40 21 8 4 29 21 45 38 l30 31 3 301 3 302 36
                                     7 c45 8 93 57 104 105 5 19 9 61 9 92 0 54 -2 59 -49 110 l-49 53 -311 3 -311
@@ -91,11 +97,14 @@
                                     13 -309 18 -321 5z" />
                         </g>
                     </svg>
-                    <span class="@countClass">@elem.Likes.Count</span>
+                    <span class="text2 @countClass">@elem.Likes.Count</span>
+                    </div>
+                    <a asp-action="SendMessage" asp-controller="Chat" asp-route-toUser="@elem.UserName"
+                        class="text3 application__control__button">Отправить сообщение</a>
                 </div>
             </div>
-        </div>
     }
 </div>
     }
-}
+        </div>
+    </div>

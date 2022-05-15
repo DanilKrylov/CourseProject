@@ -7,6 +7,7 @@
             maxCups: $("#slider-2").val(),
             cupsAscending: $("#cupsAscending").val(),
             searchString: $("#application__searchString").val(),
+            onlyLiked: $("#onlyLiked").val()
         },
         success: function (response) {
             $(".application__content").html(response)

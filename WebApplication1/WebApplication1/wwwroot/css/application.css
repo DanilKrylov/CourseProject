@@ -1,0 +1,111 @@
+﻿.application {
+    padding: 5% 0;
+}
+
+.application__content {
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+.application__item {
+    background: white;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.application__item__first {
+    display: flex;
+    margin: 0 20px 0 0;
+}
+
+.application__item__photo {
+    min-width: 175px;
+    min-height: 175px;
+    max-height: 175px;
+    position: relative;
+    background: var(--gray-color);
+    margin: 0 20px 0 0;
+}
+
+    .application__item__photo img {
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        position: absolute;
+        object-fit: contain;
+    }
+
+.application__item__info {
+}
+
+.application__info__title {
+    margin: 0 0 20px 0;
+}
+
+.application__info__cup {
+    margin: 0 0 10px 0;
+    word-wrap: break-word;
+}
+
+.application__info__desc {
+    max-width: 800px;
+}
+
+.application__item__control {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: end;
+    text-align: right;
+    position: relative;
+}
+.application__control__like {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+}
+.application__control__like svg{
+    cursor: pointer;
+    margin: 0 10px 0 0;
+}
+.application__control__name {
+}
+
+.application__control__button {
+    color: white;
+    padding: 0 10px;
+    height: 35px;
+    background: var(--green-color);
+    border-radius: 5px;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+}
+
+.application__control__button__delete {
+    color: white;
+    padding: 0 10px;
+    height: 35px;
+    background: var(--red-color);
+    border-radius: 5px;
+    position: absolute;
+    bottom: 0;
+    z-index: 1;
+    transition: all 0.3s ease 0s;
+}
+
+._active__delete__button {
+    bottom: -20%;
+}
+
+.application__control__button__delete:hover {
+    background: var(--redHover-color);
+}
+
+.application__control__button:hover {
+    background: var(--greenHover-color);
+}

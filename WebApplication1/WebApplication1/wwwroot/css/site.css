@@ -6,6 +6,7 @@
     --blue-color: rgb(75, 153, 255);
     --blueHover-color: rgb(134, 187, 255);
     --red-color: #ff4747;
+    --redHover-color: #fc6767;
 }
 
 body {
@@ -55,7 +56,7 @@ input[type="checkbox"].input-validation-error {
 }
 
 .liked {
-    fill: blue;
+    fill: var(--green-color);
     -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Chrome/Safari/Opera */
     -khtml-user-select: none; /* Konqueror */
@@ -64,9 +65,12 @@ input[type="checkbox"].input-validation-error {
     user-select: none; /* Non-prefixed version, currently
                                   not supported by any browser */
 }
+.liked:hover{
+    fill: var(--greenHover-color);
+}
 
 .unliked {
-    fill: red;
+    fill: var(--red-color);
     -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Chrome/Safari/Opera */
     -khtml-user-select: none; /* Konqueror */
@@ -74,6 +78,9 @@ input[type="checkbox"].input-validation-error {
     -ms-user-select: none; /* Internet Explorer/Edge */
     user-select: none; /* Non-prefixed version, currently
                                   not supported by any browser */
+}
+.unliked:hover{
+    fill: var(--redHover-color);
 }
 
 .count {

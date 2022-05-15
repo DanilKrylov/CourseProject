@@ -6,57 +6,64 @@
     if (Model is null || Model.Count == 0)
     {
         <div>
-            <p>ничего не найдено</p>
+            <p class="text3">ничего не найдено</p>
         </div>
     }
     else
     {
-        <div class="content">
+     <div class="application__content">
+    
+    @foreach (var elem in Model)
+    {
+        string countClass = "count" + elem.Id;
+        string likeClass;
+        string firstId = "first" + elem.Id;
+        string secId = "second" + elem.Id;
+        if (elem.Likes.FirstOrDefault(c => c.UserName == ViewBag.UserName) is null)
+        {
+            likeClass = "unliked";
+        }
+        else
+        {
+            likeClass = "liked";
+        }
+            <div class="application__item" id="@elem.Id">
+                <div class="application__item__first">
+                    <div class="application__item__photo">
+                        <img height="150" width="150" src=@elem.Brawler.Img />
+                    </div>
+                    <div class="application__item__info">
+                        <div class="text2 application__info__title">@elem.Brawler.Name</div>
+                        <div class="text3 application__info__cup">Кубков: <span>@elem.CountOfCups</span></div>
+                        <div class="text3 application__info__desc">@elem.Description</div>
+                    </div>
+                </div>
+                <div class="application__item__control">
+                    <div class="text3 application__control__name">@elem.UserName</div>
+                    <div class="application__control__like">
+                    <svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="50px" height="50px"
+                        viewBox="0 0 256.000000 256.000000" preserveAspectRatio="xMidYMid meet"
+                        onclick="Like(@elem.Id)">
 
-            @foreach (var elem in Model)
-            {
-                string countClass = "count" + elem.Id;
-                string likeClass;
-                string firstId = "first" + elem.Id;
-                string secId = "second" + elem.Id;
-                if (elem.Likes.FirstOrDefault(c => c.UserName == ViewBag.UserName) is null)
-                {
-                    likeClass = "unliked";
-                }
-                else
-                {
-                    likeClass = "liked";
-                }
-                <div class="container">
-                    <div class="row">
-                        <div class="col-6">
-                            <img height="150" width="150" src=@elem.Brawler.Img />
-                            <p>@elem.Brawler.Name</p>
-                        </div>
-                        <div class="col-6">
-                            <p>@elem.UserName</p>
-                            <p>@elem.CountOfCups</p>
-                            <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
-                                 width="50px" height="50px" viewBox="0 0 256.000000 256.000000"
-                                 preserveAspectRatio="xMidYMid meet" onclick="Like(@elem.Id)">
-
-                                <g transform="translate(0.000000,256.000000) scale(0.100000,-0.100000)"
-                                   fill="#000000" stroke="none">
-                                    <path class="@likeClass @firstId" d="M1045 2066 c-48 -18 -86 -60 -102 -115 -18 -57 -19 -1241 -1 -1259
+                        <g transform="translate(0.000000,256.000000) scale(0.100000,-0.100000)" fill="#000000"
+                            stroke="none">
+                            <path class="@likeClass @firstId" d="M1045 2066 c-48 -18 -86 -60 -102 -115 -18 -57 -19 -1241 -1 -1259
                                     19 -19 824 -17 858 3 14 8 32 17 40 21 8 4 29 21 45 38 l30 31 3 301 3 302 36
                                     7 c45 8 93 57 104 105 5 19 9 61 9 92 0 54 -2 59 -49 110 l-49 53 -311 3 -311
                                     3 0 89 c0 49 -4 92 -10 95 -5 3 -10 14 -10 24 0 9 -20 37 -45 61 -43 43 -45
                                     43 -122 47 -52 2 -91 -2 -118 -11z" />
-                                    <path class="@likeClass @secId" d="M497 1753 c-4 -3 -7 -239 -7 -524 0 -457 2 -519 16 -533 12 -13 41
+                            <path class="@likeClass @secId" d="M497 1753 c-4 -3 -7 -239 -7 -524 0 -457 2 -519 16 -533 12 -13 41
                                     -16 153 -16 121 0 140 2 154 18 15 17 17 68 17 528 0 383 -3 513 -12 522 -13
                                     13 -309 18 -321 5z" />
-                                </g>
-                            </svg>
-                            <span class="@countClass">@elem.Likes.Count</span>
-                        </div>
+                        </g>
+                    </svg>
+                    <span class="text2 @countClass">@elem.Likes.Count</span>
                     </div>
+                    <a asp-action="SendMessage" asp-controller="Chat" asp-route-toUser="@elem.UserName"
+                        class="text3 application__control__button">Отправить сообщение</a>
                 </div>
-            }
-        </div>
+            </div>
     }
-}
+</div>
+        }
+    }

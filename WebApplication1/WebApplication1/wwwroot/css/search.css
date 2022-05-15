@@ -1,7 +1,13 @@
-﻿.content__search__rangeCost {
+﻿.search {
+    max-width: 700px;
+    margin: 20px auto;
+}
+
+.content__search__rangeCost {
+    margin: 20px 0;
     position: relative;
-    width: 350px;
-    background-color: #ffffff;
+    width: 100%;
+    background-color: var(--darkGray-color);
     padding: 20px 0;
     border-radius: 10px;
 }
@@ -93,3 +99,51 @@ input[type="range"] {
     bottom: 0;
     border-radius: 5px;
 }
+
+.application__title {
+    text-align: center;
+}
+
+.filtration_params__select {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 80%;
+}
+
+select {
+    margin: 0 0 0 20px;
+    min-width: 100px;
+    height: 30px;
+    border-radius: 5px;
+    padding: 0 5px;
+}
+
+.filtration_params__input {
+    height: 40px;
+    width: 100%;
+    margin: 20px 0 0 0;
+}
+
+    .filtration_params__input input[type='text'] {
+        width: 80%;
+        height: 100%;
+        background: var(--gray-color);
+        border-radius: 5px;
+        padding: 0 20px;
+    }
+
+    .filtration_params__input input[type='button'] {
+        width: 18.5%;
+        height: 100%;
+        background: var(--green-color);
+        border-radius: 5px;
+        padding: 0 20px;
+        color: white;
+        cursor: pointer;
+        margin-left: 5px;
+    }
+
+        .filtration_params__input input[type='button']:hover {
+            background: var(--greenHover-color);
+        }

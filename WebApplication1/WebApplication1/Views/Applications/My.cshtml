@@ -4,34 +4,39 @@
 }
 @model IEnumerable<Application>
 
-
-@{
-    if (Model is null)
+<link href="~/css/application.css" rel="stylesheet" />
+<div class="application">
+        <div class="application__content">
+    @if (Model is null)
     {
         <div>
-            <p>Покачто нет заявок</p>
+            <p class="text2">Покачто нет заявок</p>
         </div>
     }
     else
     {
-        <div>
             @foreach (var elem in Model)
             {
-            <div class="container" id="@elem.Id">
-                <div class="row">
-                    <div class="col-6">
+            <div class="application__item" id="@elem.Id">
+                <div class="application__item__first">
+                    <div class="application__item__photo">
                         <img height="150" width="150" src=@elem.Brawler.Img />
-                        <p>@elem.Brawler.Name</p>
                     </div>
-                    <div class="col-6">
-                        <p>@elem.User.Name</p>
-                        <p>@elem.CountOfCups</p>
-                        <button onclick="deleteApplication(@elem.Id)">Удалить</button>
+                    <div class="application__item__info">
+                        <div class="text2 application__info__title">@elem.Brawler.Name</div>
+                        <div class="text3 application__info__cup">Кубков: <span>@elem.CountOfCups</span></div>
+                        <div class="text3 application__info__desc">@elem.Description</div>
                     </div>
+                </div>
+                <div class="application__item__control">
+                    <div class="text3 application__control__name">@elem.User.Name</div>
+                    <button class="text3 application__control__button">Удалить</button>
+                    <button class="text3 application__control__button__delete"
+                        onclick="deleteApplication(@elem.Id)">Удалить</button>
                 </div>
             </div>
             }
-        </div>
         <script src="~/js/deleteApplication.js"></script>
     }
-}
+            </div>
+    </div>
