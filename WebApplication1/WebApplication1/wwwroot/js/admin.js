@@ -1,10 +1,25 @@
 ﻿
 
 $(document).ready(function () {
-    submitParams("/Admin/GetApplications");
-    getUsers()
+    submitParamsAdmin();
+    getUsers();
 })
-
+function submitParamsAdmin() {
+    $.ajax({
+        url: "/Admin/GetApplications",
+        type: 'POST',
+        data: {
+            minCups: $("#slider-1").val(),
+            maxCups: $("#slider-2").val(),
+            cupsAscending: $("#cupsAscending").val(),
+            searchString: $("#application__searchString").val(),
+            onlyLiked: $("#onlyLiked").val()
+        },
+        success: function (response) {
+            $(".admin__items__applications").html(response)
+        }
+    })
+}
 function removeApplication(id, userName) {
     $.ajax({
         url: "/Admin/RemoveApplication",
@@ -16,10 +31,7 @@ function removeApplication(id, userName) {
         success: function (response) {
             alert(response)
             if (response) {
-                let searchstr = "#application" + id
-                console.log($(searchstr))
-                console.log($(searchstr).html())
-                $(searchstr).remove()
+                $(`#application_${id}`).remove();
             }
         }
     })
@@ -34,8 +46,7 @@ function getUsers() {
             searchString: $('#user__searchString').val()
         },
         success: function (response) {
-            console.log(response)
-            $(".user__content").html(response)
+            $(".admin__items__users").html(response)
         }
     })
 }
@@ -48,8 +59,7 @@ function getUserInfo(userName) {
             userName: userName
         },
         success: function (response) {
-            console.log(response)
-            $(".selected__user__data").html(response)
+            $(".userInfo__content").html(response)
         }
     })
 }

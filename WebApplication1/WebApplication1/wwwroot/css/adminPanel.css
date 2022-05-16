@@ -26,6 +26,7 @@ body._lock {
     border-radius: 5px;
     padding: 20px;
     position: relative;
+    overflow: auto;
 }
 
 .userInfo__content__title {
@@ -53,7 +54,7 @@ body._lock {
 .userInfo__content__exit {
     cursor: pointer;
     display: block;
-    position: absolute;
+    position: fixed;
     top: 15px;
     right: 10px;
     width: 20px;
@@ -66,7 +67,7 @@ body._lock {
         display: inline-block;
         width: 100%;
         height: 2px;
-        background: black;
+        background: white;
         top: 35%;
         position: absolute;
     }
@@ -93,6 +94,9 @@ body._lock {
     width: 100%;
     display: flex;
     align-items: center;
+    position: fixed;
+    top: 0;
+    z-index: 49;
 }
 
 .admin__header__item {
@@ -110,7 +114,7 @@ body._lock {
     }
 
 .admin__content {
-    padding: 5%;
+    padding: 5% 0;
     max-width: 1280px;
     margin: 0 auto;
 }
@@ -123,6 +127,9 @@ body._lock {
     padding: 20px;
     margin-bottom: 20px;
     width: 100%;
+}
+.admin__content__item:nth-child(2n - 1){
+    background: var(--gray-color);
 }
 
 .admin__content__items {
@@ -227,4 +234,11 @@ body._lock {
 
 ._active__delete__button {
     bottom: -20%;
+}
+
+.admin__items__users{
+    margin-top: 20px;
+}
+.userInfo__content__items{
+    margin: 20px 0 0 0;
 }

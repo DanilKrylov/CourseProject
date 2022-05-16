@@ -6,18 +6,13 @@
 @{
     foreach (var user in Model)
     {
-        <div class="user__info" id="@user.Name">
-            <div>
-                <span>username: </span>
-                <span>@user.Name</span>
-            </div>
-            <div>
-                <span>админ: </span>
-                <span>@user.IsAdmin</span>
-            </div>
-            <div>
-                <button onclick="getUserInfo('@user.Name')">больше данных</button>
-            </div>
-        </div>
+        <div class="admin__content__item">
+                        <div class="admin__item__info">
+                            <div class="text3 admin__info__name">Логин: @user.Name</div>
+                            <div class="text3 admin__info__admin">Админ: @user.IsAdmin</div>
+                        </div>
+                        <button class="text3 admin__item__button" onclick="getUserInfo('@user.Name')">Больше
+                            данных</button>
+                    </div>
     }
 }

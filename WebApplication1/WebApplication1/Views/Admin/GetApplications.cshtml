@@ -4,6 +4,7 @@
 }
 @model List<Application>
 @{
+    <link href="~/css/adminPanel.css" rel="stylesheet" />
     if (Model is null || Model.Count == 0)
     {
         <div>
@@ -12,26 +13,53 @@
     }
     else
     {
-            @foreach (var elem in Model)
-            {
-                <div class="admin__content__item">
-                        <div class="admin__item__first">
-                            <div class="admin_item__photo">
-                                <img height="150" width="150" src=@elem.Brawler.Img />
-                            </div>
-                            <div class="admin__item__info">
-                                <div class="text2 admin__info__title">@elem.Brawler.Name</div>
-                                <div class="text3 admin__info__cup">Кубков: <span>@elem.CountOfCups</span></div>
-                                <div class="text3 admin__info__desc">@elem.Description</div>
-                            </div>
-                        </div>
-                        <div class="admin__item__control">
-                            <div class="text3 admin__control__name">@elem.UserName</div>
-                            <div class="text3 admin__control__like">Лайков: @elem.Likes.Count</div>
-                            <button class="text3 admin__control__button">Удалить</button>
-                            <button class="text3 admin__control__button__delete">Удалить</button>
-                        </div>
+        @foreach (var elem in Model)
+        {
+            <div class="admin__content__item" id="application_@elem.Id">
+                <div class="admin__item__first">
+                    <div class="admin_item__photo">
+                        <img height="150" width="150" src=@elem.Brawler.Img />
                     </div>
-            }
+                    <div class="admin__item__info">
+                        <div class="text2 admin__info__title">@elem.Brawler.Name</div>
+                        <div class="text3 admin__info__cup">Кубков: <span>@elem.CountOfCups</span></div>
+                        <div class="text3 admin__info__desc">@elem.Description</div>
+                    </div>
+                </div>
+                <div class="admin__item__control">
+                    <div class="text3 admin__control__name">@elem.UserName</div>
+                    <div class="text3 admin__control__like">Лайков: @elem.Likes.Count</div>
+                    <button class="text3 admin__control__button">Удалить</button>
+                    <button class="text3 admin__control__button__delete" onclick="removeApplication(@elem.Id, '@elem.UserName')">Удалить</button>
+                </div>
+            </div>
+        }
     }
+    <script>
+    $('.admin__header__item').click(function () {
+        let items = $('.admin__content__items');
+        $('.admin__header__item').css('border-bottom', '0');
+        $(this).css('border-bottom', '3px solid white')
+        items.removeClass('_active__adminMenu');
+        $(`#${$(this).attr('admin-type')}`).addClass('_active__adminMenu');
+    });
+    $('.admin__control__button').click(function () {
+        $(this).parent().children('.admin__control__button__delete').toggleClass('_active__delete__button');
+    });
+    // инфа про юзера
+    $(".admin__item__button, .userinfo__content__exit").click(function () {
+        if (!$('.userInfo').hasClass('_active')) {
+        }
+        $(".userInfo").toggleClass("_active");
+        $("body").toggleClass("_lock");
+    });
+    //нажатие за блоком инфы про юзера
+    $(".userInfo").mouseup(function (e) {
+        var div = $(".userInfo__content");
+        if (!div.is(e.target) && div.has(e.target).length === 0) {
+            $(".userInfo").toggleClass("_active");
+            $("body").toggleClass("_lock");
+        }
+    });
+    </script>
 }
