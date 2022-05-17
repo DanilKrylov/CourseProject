@@ -70,6 +70,7 @@ namespace BSTeamSearch.Controllers
                 return null;
             }
 
+            ViewBag.UserName = userName;
             return View(_groupRepository.GetGroup(chatId));
         }
     }

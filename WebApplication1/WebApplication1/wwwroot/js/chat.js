@@ -2,11 +2,20 @@
     .withUrl("/chat")
     .build();
 hubConnection.on("Send", function (message, dateTime, name) {
-    let border = "<p>------------------------------------------</p>"
-    let text = "<p>сообщение от:" + name + "</p><span>" + message + "   </span><span>" + dateTime + "</span>"
-    $("#chatroom").html(border + text + border + $("#chatroom").html())
+
+    let text;
+    if (name == userName) {
+        text = "<div class='chat__messages__item'><div class='chat__messages__item__my'><div class='text3 chat__messages__item__content'>" + message + "</div ></div ></div > "
+    }
+    else {
+        text = "<div class='chat__messages__item'><div class='chat__messages__item__other'><div class='text3 chat__messages__item__content'>" + message + "</div ></div ></div > "
+    }
+    
+    $(".chat__content__messages").html($(".chat__content__messages").html() + text)
+    scroll()
 });
 
+var userName
 
 function send() {
     let message = $("#message").val();
@@ -23,12 +32,18 @@ function removeFromChat() {
     }
 }
 
+function scroll() {
+    $('.chat__content__messages').scrollTop($('.chat__content__messages').height())
+}
 
 hubConnection.start()
 
 
+
 $(document).ready(function () {
-    setTimeout(enter,1000)
+    setTimeout(enter, 1000)
+    scroll()
+    userName = $(".chat").attr("userName")
 })
 
 
@@ -49,8 +64,9 @@ function getChat(chatId) {
         },
         success: function (response) {
             removeFromChat()
-            $(".current__chat").html(response)
+            $(".chat__content__messages").html(response)
             hubConnection.invoke("Enter", chatId.toString());
+            scroll()
         }
     })
 }
