@@ -16,5 +16,7 @@ namespace BSTeamSearch.Repositories.Interfaces
         public Application Get(int applicationId);
 
         public void Add(Application application);
+
+        public void Edit(Application newApplication);
     }
 }

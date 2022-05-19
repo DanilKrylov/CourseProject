@@ -1,20 +1,25 @@
 ﻿@{ 
     Layout = null;
 }
-<html xmlns="http://www.w3.org/1999/xhtml">
+
+<!DOCTYPE html>
+<html>
 <head>
     <title>admin</title>
     <script src="~/jquery-ajax-unobtrusive/jquery-1.7.1.min.js"></script>
     <script src="~/jquery-ajax-unobtrusive/JavaScript.js"></script>
     <link href="~/css/nullStyle.css" rel="stylesheet" />
+    <link href="~/css/search.css" rel="stylesheet" />
     <link href="~/css/site.css" rel="stylesheet" />
     <link href="~/css/adminPanel.css" rel="stylesheet" />
+
     <script src="~/js/admin.js"></script>
+    <script src="~/js/sendFiltrationParams.js"></script>
 </head>
 <body>
     <div class="userInfo">
         <div class="userInfo__content">
-            
+
         </div>
     </div>
     <div class="admin">
@@ -30,29 +35,29 @@
             <div class="admin__content">
                 <div class="admin__content__items _active__adminMenu" id="applications">
                     <div class="search">
-        <div class="application__filtration__params">
-            <div class="content__search__rangeCost">
-                <div class="content__search__rangeCost__values">
-                    <span class="text3">Кубки от</span>
-                    <span class="text3" id="content__search__rangeCost__range1">0</span>
-                    <span class="text3">Кубки до </span>
-                    <span class="text3" id="content__search__rangeCost__range2">1250</span>
-                </div>
-                <div class="content__search__rangeCost__container">
-                    <div class="slider-track"></div>
-                    <input name="minCups" type="range" min="0" max="1250" value="0" id="slider-1" oninput="slideOne()">
-                    <input name="maxCups" type="range" min="0" max="1250" value="1250" id="slider-2" oninput="slideTwo()">
-                </div>
-            </div>
-                <select class="text3" id="cupsAscending">
-                    <option value="true">кубки по возрастанию</option>
-                    <option value="false">кубки по убыванию</option>
-                </select>
-            <div class="filtration_params__input">
-                <input type="text" class="text3" id="application__searchString" />
-                <input type="button" class="text3" name="Поиск" value="Поиск" onclick="submitParamsAdmin()" />
-                </div>
-        </div>
+                        <div class="application__filtration__params">
+                            <div class="content__search__rangeCost">
+                                <div class="content__search__rangeCost__values">
+                                    <span class="text3">Кубки от</span>
+                                    <span class="text3" id="content__search__rangeCost__range1">0</span>
+                                    <span class="text3">Кубки до </span>
+                                    <span class="text3" id="content__search__rangeCost__range2">1250</span>
+                                </div>
+                                <div class="content__search__rangeCost__container">
+                                    <div class="slider-track"></div>
+                                    <input name="minCups" type="range" min="0" max="1250" value="0" id="slider-1" oninput="slideOne()">
+                                    <input name="maxCups" type="range" min="0" max="1250" value="1250" id="slider-2" oninput="slideTwo()">
+                                </div>
+                            </div>
+                            <select class="text3" id="cupsAscending">
+                                <option value="true">кубки по возрастанию</option>
+                                <option value="false">кубки по убыванию</option>
+                            </select>
+                            <div class="filtration_params__input">
+                                <input type="text" class="text3" id="application__searchString" />
+                                <input type="button" class="text3" name="Поиск" value="Поиск" onclick="submitParamsAdmin()" />
+                            </div>
+                        </div>
                     </div>
                     <div class="admin__items__applications">
 
@@ -72,8 +77,25 @@
             </div>
         </div>
     </div>
-   <script src="~/js/slider.js"></script>
-            <script src="~/js/sendFiltrationParams.js"></script>
-            <link href="~/css/search.css" rel="stylesheet" />
+    <script src="~/js/slider.js"></script>
+
+
+    <script>
+        //нажатие за блоком инфы про юзера
+        $(".userInfo").mouseup(function (e) {
+            var div = $(".userInfo__content");
+            if (!div.is(e.target) && div.has(e.target).length === 0) {
+                $(".userInfo").toggleClass("_active");
+                $("body").toggleClass("_lock");
+            }
+        });
+        $('.admin__header__item').click(function () {
+            let items = $('.admin__content__items');
+            $('.admin__header__item').css('border-bottom', '0');
+            $(this).css('border-bottom', '3px solid white')
+            items.removeClass('_active__adminMenu');
+            $(`#${$(this).attr('admin-type')}`).addClass('_active__adminMenu');
+        });
+    </script>
 </body>
 </html>

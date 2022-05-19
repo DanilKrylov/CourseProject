@@ -21,14 +21,14 @@
                 <div class="autorisation__content__title"><span class="text2">Вход</span></div>
                 <div class="autorisation__content__form">
                     <form asp-action="AutorisationToTheSite" asp-controller="Autorisation" asp-antiforgery="true">
-                            <p class="text3 autorisation__input__label">Ваш логин:</p>
+                            <p class="text3 text_marg autorisation__input__label">Ваш логин:</p>
                             <input class="autorisation__input" asp-for="Name" type="text">
                             <span asp-validation-for="Name"></span>
-                            <p class="text3 autorisation__input__label">Ваш пароль:</p>
+                            <p class="text3 text_marg autorisation__input__label">Ваш пароль:</p>
                             <input class="autorisation__input" asp-for="Password" type="password"/>
                             <span asp-validation-for="Password" data-valmsg-for=Password
                                 data-valmsg-replace="true"></span>
-                            <input class="text1 autorisation__submit" type="submit" value="Войти" />
+                            <input class="text1 text_marg autorisation__submit" type="submit" value="Войти" />
                     </form>
                     <div class="text3 autorisation__content__text">
                         <span>Еще нет аккаунта?</span>

@@ -86,6 +86,17 @@
     align-items: center;
 }
 
+.application__edit__button {
+    color: white;
+    padding: 0 10px;
+    height: 35px;
+    background: var(--green-color);
+    border-radius: 5px;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+}
+
 .application__control__button__delete {
     color: white;
     padding: 0 10px;

@@ -7,12 +7,26 @@
     foreach (var user in Model)
     {
         <div class="admin__content__item">
-                        <div class="admin__item__info">
-                            <div class="text3 admin__info__name">Логин: @user.Name</div>
-                            <div class="text3 admin__info__admin">Админ: @user.IsAdmin</div>
-                        </div>
-                        <button class="text3 admin__item__button" onclick="getUserInfo('@user.Name')">Больше
-                            данных</button>
-                    </div>
+            <div class="admin__item__info">
+                <div class="text3 admin__info__name">Логин: @user.Name</div>
+                <div class="text3 admin__info__admin">Админ: @user.IsAdmin</div>
+            </div>
+            <button class="text3 admin__item__button" onclick="getUserInfo('@user.Name')">Больше данных</button>
+        </div>
     }
 }
+<script>
+    $(".userInfo__content__exit").click(function () {
+        if (!$('.userInfo').hasClass('_active')) {
+        }
+        $(".userInfo").toggleClass("_active");
+        $("body").toggleClass("_lock");
+    });
+    // инфа про юзера
+    $(".admin__item__button, .userinfo__content__exit").click(function () {
+        if (!$('.userInfo').hasClass('_active')) {
+        }
+        $(".userInfo").toggleClass("_active");
+        $("body").toggleClass("_lock");
+    });
+</script>

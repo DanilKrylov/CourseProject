@@ -136,5 +136,17 @@ namespace BSTeamSearch.Repositories.Realisation
 
             return applications;
         }
+
+        public void Edit(Application newApplication)
+        {
+            var application = Get(newApplication.Id);
+
+            application.Description = newApplication.Description;
+            application.BrawlerName = newApplication.BrawlerName;
+            application.CountOfCups = newApplication.CountOfCups;
+            application.HasVoiceChat = newApplication.HasVoiceChat;
+
+            _db.SaveChanges();
+        }
     }
 }

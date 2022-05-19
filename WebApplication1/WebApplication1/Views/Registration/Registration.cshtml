@@ -24,40 +24,40 @@
                 <div class="autorisation__content__form">
                     <form form method="post" data-ajax="true" data-ajax-complete="myComplete" asp-action="Registration"
                           asp-controller="Registration" asp-antiforgery="true">
-                        <p class="text3 autorisation__input__label">Ваш логин:</p>
+                        <p class="text3 text_marg autorisation__input__label">Ваш логин:</p>
                         <input class="autorisation__input" asp-for="Name" type="text">
                         <span asp-validation-for="Name" class="field-validation-valid" data-valmsg-for="Name"
                               data-valmsg-replace="true"></span>
                         <br />
-                        <p class="text3 autorisation__input__label">Ваш пароль:</p>
+                        <p class="text3 text_marg autorisation__input__label">Ваш пароль:</p>
                         <input class="autorisation__input" asp-for="Password" type="password" />
                         <span asp-validation-for="Password" class="field-validation-valid" data-valmsg-for="Password"
                               data-valmsg-replace="true"></span>
                         <br />
-                        <p class="text3 autorisation__input__label">Повторите ваш пароль:</p>
+                        <p class="text3 text_marg autorisation__input__label">Повторите ваш пароль:</p>
                         <input class="autorisation__input" asp-for="ConfirmPassword" type="password" />
                         <span asp-validation-for="ConfirmPassword" class="field-validation-valid"
                               data-valmsg-for="ConfirmPassword" data-valmsg-replace="true"></span>
                         <br />
-                        <p class="text3 autorisation__input__label">Введите Email</p>
+                        <p class="text3 text_marg autorisation__input__label">Введите Email</p>
                         <input class="autorisation__input" asp-for="Email" type="email" />
                         <span asp-validation-for="Email"></span>
                         <br />
-                        <p class="text3 autorisation__input__label">Введите ваш возраст:</p>
+                        <p class="text3 text_marg autorisation__input__label">Введите ваш возраст:</p>
                         <input required class="autorisation__input" asp-for="Age" type="number" />
                         <span asp-validation-for="Age" class="field-validation-valid"
                               data-valmsg-for="ConfirmPassword" data-valmsg-replace="true"></span>
                         <br />
-                        <p class="text3 autorisation__input__label">Введите ваш никнейм в BrawlStars:</p>
+                        <p class="text3 text_marg autorisation__input__label">Введите ваш никнейм в BrawlStars:</p>
                         <input required class="autorisation__input" asp-for="BrawlAccountName" type="text" />
                         <span asp-validation-for="BrawlAccountName"></span>
                         <br />
-                        <p class="text3 autorisation__input__label">Введите общее количество кубков на вашем аккауте:</p>
+                        <p class="text3 text_marg autorisation__input__label">Введите общее количество кубков на вашем аккауте:</p>
                         <input required class="autorisation__input" asp-for="CountOfCups" type="text" required />
                         <span asp-validation-for="CountOfCups"></span>
 
 
-                        <input class="text1 autorisation__submit" type="submit" value="Зарегестрироваться" />
+                        <input class="text1 text_marg autorisation__submit" type="submit" value="Зарегестрироваться" />
                     </form>
                     <div class="text3 autorisation__content__text">
                         <span>Еще нет аккаунта?</span>

@@ -12,12 +12,12 @@
             <div class="text3 userInfo__content__text">Кубки: @Model.CountOfCups</div>
             @if (Model.IsBanned)
             {
-            <div class="text3 userInfo__content__text">Пользователь забанен</div>
+            <div class="text3 userInfo__content__text isBaned">Пользователь забанен</div>
             <button id="banButton" class="text3" onclick="unban('@Model.Name')">Разбанить</button>
             }
             else
             {
-                 <div class="text3 userInfo__content__text">Пользователь не забанен</div>
+                 <div class="text3 userInfo__content__text isBaned">Пользователь не забанен</div>
             <button id="banButton" class="text3" onclick="ban('@Model.Name')">Забанить</button>
             }
             <div class="userInfo__content__items">
@@ -37,7 +37,7 @@
                     <div class="admin__item__control">
                         <div class="text3 admin__control__name">@application.UserName</div>
                         <div class="text3 admin__control__like">Лайков: @application.Likes.Count</div>
-                        <button class="text3 admin__control__button">Удалить</button>
+                        <button class="text3 admin__control__button " onclick="confirmDelete()">Удалить</button>
                         <button class="text3 admin__control__button__delete" onclick="removeApplication(@application.Id, '@application.UserName')">Удалить</button>
                     </div>
                 </div>
@@ -52,10 +52,6 @@
         items.removeClass('_active__adminMenu');
         $(`#${$(this).attr('admin-type')}`).addClass('_active__adminMenu');
     });
-    $('.admin__control__button').click(function () {
-        $(this).parent().children('.admin__control__button__delete').toggleClass('_active__delete__button');
-    });
-
  $(".userInfo__content__exit").click(function () {
     if (!$('.userInfo').hasClass('_active')) {
     }

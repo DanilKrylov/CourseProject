@@ -2,16 +2,17 @@
 @{
     Layout = "_MainLayout";
 }
-@model ApplicationAddViewModel
-    <link href="~/css/add.css" rel="stylesheet" />
+@model ApplicationEditViewModel
+<link href="~/css/add.css" rel="stylesheet" />
 <div class="add">
     <div class="add__content">
-        <div class="add__content__title"><span class="text2">Создание заявки</span></div>
+        <div class="add__content__title"><span class="text2">Редактирование заявки</span></div>
         <div class="add__content__form">
-            <form asp-action="Add" asp-controller="Applications" method="post">
+            <form asp-action="Edit" asp-controller="Applications" method="post">
                 <p class="text3 text_marg add__input__label">Выберите бравлера:</p>
                 <select asp-for="BrawlerName">
                     @{
+                        var ap = Model;
                         foreach (Brawler elem in ViewBag.Brawlers)
                         {
                             <option>@elem.Name</option>
@@ -29,6 +30,7 @@
                 <p class="text3 text_marg add__input__label">Напишите пару слов о себе и о данной заявке</p>
                 <textarea type="text" asp-for="Description" placeholder="например в каком режиме хотите играть, в какоевремя вам удобно играть"></textarea>
                 <span asp-validation-for="Description"></span>
+                <input type="number" asp-for="Id" value="@Model.Id" style="display:none;"/>
                 <input class="add__submit text_marg" type="submit" value="Отправить" />
             </form>
         </div>

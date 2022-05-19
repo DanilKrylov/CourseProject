@@ -3,6 +3,10 @@
 $(document).ready(function () {
     submitParamsAdmin();
     getUsers();
+
+    $('.admin__control__button').click(function () {
+        $(this).parent().children('.admin__control__button__delete').toggleClass('_active__delete__button');
+    });
 })
 function submitParamsAdmin() {
     $.ajax({
@@ -20,6 +24,12 @@ function submitParamsAdmin() {
         }
     })
 }
+
+function confirmDelete() {
+    $(".admin__control__button").parent().children('.admin__control__button__delete').toggleClass('_active__delete__button');
+}
+
+
 function removeApplication(id, userName) {
     $.ajax({
         url: "/Admin/RemoveApplication",
@@ -77,6 +87,8 @@ function ban(userName) {
                 var button = $('#banButton')
                 button.html("Разбанить")
                 button.attr('onclick', "unban('" + userName + "')")
+                var text = $(".isBaned")
+                text.html("Пользователь забанен")
             }
             else {
                 alert("error")
@@ -97,6 +109,8 @@ function unban(userName) {
                 var button = $('#banButton')
                 button.html("Забанить")
                 button.attr('onclick', "ban('" + userName + "')")
+                var text = $(".isBaned")
+                text.html("Пользователь не забанен")
             }
             else {
                 alert("error")

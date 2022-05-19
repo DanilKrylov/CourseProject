@@ -26,13 +26,17 @@
                         <div class="text2 application__info__title">@elem.Brawler.Name</div>
                         <div class="text3 application__info__cup">Кубков: <span>@elem.CountOfCups</span></div>
                         <div class="text3 application__info__desc">@elem.Description</div>
+                        
                     </div>
                 </div>
                 <div class="application__item__control">
                     <div class="text3 application__control__name">@elem.User.Name</div>
+                    <a asp-action="Edit" asp-controller="Applications" asp-route-id="@elem.Id" class="text3 application__edit__button">Редактировать</a>
                     <button class="text3 application__control__button">Удалить</button>
                     <button class="text3 application__control__button__delete"
-                        onclick="deleteApplication(@elem.Id)">Удалить</button>
+                            onclick="deleteApplication(@elem.Id)">
+                        Удалить
+                    </button>
                 </div>
             </div>
             }

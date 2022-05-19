@@ -38,6 +38,67 @@ namespace BSTeamSearch.Controllers
             return View(applicationList);
         }
 
+        public IActionResult Edit(int id)
+        {
+            ViewBag.UserName = ControllerContext.HttpContext.Session.GetString("name");
+            if (ViewBag.UserName is null || !_userRepository.UserIsRegistered(ViewBag.UserName))
+            {
+                return View("../NotRegistered");
+            }
+
+            Application application;
+            try
+            {
+                application = _applicationRepository.Get(id);
+            }
+            catch
+            {
+                return Redirect("../Applications/All");
+            }
+
+            if (!_applicationRepository.GetUserApplications((string)ViewBag.UserName).Contains(application))
+            {
+                return Redirect("../Applications/All");
+            }
+
+            ViewBag.Brawlers = _brawlerRepository.GetAll();
+            return View(ApplicationEditViewModel.GetViewModel(application));
+        }
+
+        [HttpPost]
+        public IActionResult Edit(ApplicationEditViewModel application)
+        {
+            ViewBag.UserName = ControllerContext.HttpContext.Session.GetString("name");
+            if (ViewBag.UserName is null || !_userRepository.UserIsRegistered(ViewBag.UserName))
+            {
+                return View("../NotRegistered");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                ViewBag.Brawlers = _brawlerRepository.GetAll();
+                return View(application);
+            }
+
+            Application editingApplication;
+            try
+            {
+                editingApplication = _applicationRepository.Get(application.Id);
+            }
+            catch
+            {
+                return Redirect("../Applications/All");
+            }
+
+            if (!_applicationRepository.GetUserApplications((string)ViewBag.UserName).Contains(editingApplication))
+            {
+                return Redirect("../Applications/All");
+            }
+
+            _applicationRepository.Edit(application.GetApplicationModel(ViewBag.UserName));
+            return Redirect("../Applications/My");
+        }
+
         public IActionResult Add()
         {
             var userName = ControllerContext.HttpContext.Session.GetString("name");
