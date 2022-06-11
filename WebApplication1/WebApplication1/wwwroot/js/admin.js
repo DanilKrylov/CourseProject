@@ -3,10 +3,6 @@
 $(document).ready(function () {
     submitParamsAdmin();
     getUsers();
-
-    $('.admin__control__button').click(function () {
-        $(this).parent().children('.admin__control__button__delete').toggleClass('_active__delete__button');
-    });
 })
 function submitParamsAdmin() {
     $.ajax({
@@ -21,12 +17,11 @@ function submitParamsAdmin() {
         },
         success: function (response) {
             $(".admin__items__applications").html(response)
+            $('.admin__control__button').click(function () {
+                $(this).parent().children('.admin__control__button__delete').toggleClass('_active__delete__button');
+            });
         }
     })
-}
-
-function confirmDelete() {
-    $(".admin__control__button").parent().children('.admin__control__button__delete').toggleClass('_active__delete__button');
 }
 
 
@@ -70,6 +65,9 @@ function getUserInfo(userName) {
         },
         success: function (response) {
             $(".userInfo__content").html(response)
+            $('.admin__control__button').click(function () {
+                $(this).parent().children('.admin__control__button__delete').toggleClass('_active__delete__button');
+            });
         }
     })
 }

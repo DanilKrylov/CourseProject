@@ -21,6 +21,7 @@ namespace BSTeamSearch.DataBase
         public DbSet<Message> Messages { get; set; }
         public DBContent(DbContextOptions<DBContent> options) : base(options)
         {
+            //Database.EnsureDeleted();
             Database.EnsureCreated();
         }
 
@@ -32,6 +33,10 @@ namespace BSTeamSearch.DataBase
                     new Brawler("Шелли", "../img/шелли.png"),
                     new Brawler("Кольт", "../img/кольт.png"),
                     new Brawler("Булл", "../img/булл.png"),
+                    new Brawler("Бо", "../img/бо.png"),
+                    new Brawler("Джин", "../img/джин.png"),
+                    new Brawler("Пэм", "../img/пэм.png"),
+                    new Brawler("Роза", "../img/роза.png"),
                 });
 
             User[] admins = JsonConvert.DeserializeObject<User[]>(File.ReadAllText("admins.json"));
